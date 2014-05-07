@@ -13,14 +13,5 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_action_navigation_forward" />
     
-    <ImageButton
-        android:id="@+id/LogIn_Skip"
-        style="?android:attr/actionButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_action_navigation_forward" />
 
 </RelativeLayout>
