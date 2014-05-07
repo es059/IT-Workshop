@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.hdm.mobile.health.LogIn"
+    tools:ignore="MergeRootFrame" >
+   	<fragment
+		android:id="@+id/overview_trainingDayPicker"
+		android:name="de.hdm.mobile.health.ActionBarLogInFragment"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/actionbar_height"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"
+		tools:layout="@layout/actionbar_training_login_fragment"/>
+   	
+   	
+ </RelativeLayout>
+
