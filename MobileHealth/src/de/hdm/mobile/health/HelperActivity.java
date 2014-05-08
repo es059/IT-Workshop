@@ -14,7 +14,7 @@ public class HelperActivity extends Activity  {
 		if (!firstTimeCheck()){
 			startActivity(new Intent(this, LogIn.class));
 		}else{
-			startActivity(new Intent(this, .class));
+			startActivity(new Intent(this, LogIn.class));
 		    finish();
 		}
 	}

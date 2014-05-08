@@ -10,7 +10,7 @@ public class BottomLogInFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(de.hdm.mobile.health.R.layout.actionbar_login_fragment,
+		View view = inflater.inflate(de.hdm.mobile.health.R.layout.bottom_login_fragment,
 				container,false);
 
 		return view;
