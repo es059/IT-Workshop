@@ -26,7 +26,6 @@ public class ActionBarLogInFragment extends Fragment{
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(de.hdm.mobile.health.R.layout.actionbar_login_fragment,
 				container,false);
-
 		return view;
 		
 	}
