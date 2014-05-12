@@ -1,0 +1,163 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.hdm.mobile.health.LogIn"
+    tools:ignore="MergeRootFrame" >
+    
+
+    <TextView
+   	    android:id="@+id/textView_general"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_above="@+id/divider_general"
+   	    android:layout_alignBottom="@+id/divider_general"
+   	    android:layout_alignParentLeft="true"
+   	    android:layout_marginLeft="5dp"
+   	    android:text="Allgemeine Informationen" />
+   	
+  	<View
+  	    android:id="@+id/divider_general"
+	    android:layout_width="200dp"
+	    android:layout_height="1dp"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginTop="30dp"
+	    android:background="@android:color/darker_gray"/>
+  
+   	<EditText
+   	    android:id="@+id/Surname"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:ems="10"
+   	    android:layout_marginTop="10dp"
+   	    android:layout_below="@+id/divider_general"
+   	    android:layout_marginLeft="5dp"
+   	    android:hint="Vorname"
+   	    android:inputType="textPersonName" />
+
+   	<EditText
+   	    android:id="@+id/Lastname"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_alignParentLeft="true"
+   	    android:layout_below="@+id/Surname"
+   	    android:layout_marginLeft="5dp"
+   	    android:ems="10"
+   	    android:hint="Nachname"
+   	    android:inputType="textPersonName" />
+
+   	 <EditText
+   	     android:id="@+id/Age"
+   	     android:layout_width="wrap_content"
+   	     android:layout_height="wrap_content"
+   	     android:layout_below="@+id/Lastname"
+   	     android:ems="10"
+   	     android:layout_marginLeft="5dp"
+   	     android:hint="Alter"
+   	     android:inputType="numberDecimal" />
+   	 
+   	<EditText
+   	    android:id="@+id/Height"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_below="@+id/Age"
+   	    android:layout_centerVertical="true"
+   	    android:ems="10"
+   	    android:layout_marginLeft="5dp"
+   	    android:hint="Größe in cm"
+   	    android:inputType="numberDecimal" >
+   	</EditText>
+   	
+   	
+   	<EditText
+   	    android:id="@+id/Weight"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_below="@+id/Height"
+   	    android:ems="10"
+   	    android:layout_marginLeft="5dp"
+   	    android:hint="Gewicht"
+   	    android:inputType="numberDecimal" />
+   	
+   <TextView
+   	    android:id="@+id/textView_gender"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_above="@+id/divider_gender"
+   	    android:layout_alignBottom="@+id/divider_gender"
+   	    android:layout_alignParentLeft="true"
+   	    android:layout_marginLeft="5dp"
+   	    android:text="Geschlecht" />
+   	
+  	<View
+  	    android:id="@+id/divider_gender"
+	    android:layout_width="200dp"
+	    android:layout_height="1dp"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginTop="30dp"
+	    android:layout_below="@+id/Weight"
+	    android:background="@android:color/darker_gray"/>
+  	
+    <RadioGroup
+        android:id="@+id/RadioButton_Group"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/divider_gender"
+	    android:orientation="horizontal">	 
+	   	 <RadioButton
+	   	     android:id="@+id/Gender_male"
+	   	     android:layout_width="wrap_content"
+	   	     android:layout_height="wrap_content"
+	   	     android:layout_marginLeft="5dp"
+	   	     android:layout_marginTop="10dp"
+	   	     android:text="Männlich" />
+	   	 
+	   	 <RadioButton
+	   	     android:id="@+id/Gender_female"
+	   	     android:layout_width="wrap_content"
+	   	     android:layout_height="wrap_content"
+	   	     android:layout_marginLeft="5dp"
+	   	     android:layout_marginTop="10dp"
+	   	     android:text="Weiblich" />
+	</RadioGroup>
+	
+    <TextView
+   	    android:id="@+id/textView_activity"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_above="@+id/divider_activity"
+   	    android:layout_alignBottom="@+id/divider_activity"
+   	    android:layout_alignParentLeft="true"
+   	    android:layout_marginLeft="5dp"
+   	    android:text="Aktivitätsniveau" />
+   	
+  	<View
+  	    android:id="@+id/divider_activity"
+	    android:layout_width="200dp"
+	    android:layout_height="1dp"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginTop="30dp"
+	    android:layout_below="@+id/RadioButton_Group"
+	    android:background="@android:color/darker_gray"/>
+    
+   	<Spinner
+   	     android:id="@+id/ActivityLevel"
+   	     android:layout_width="wrap_content"
+   	     android:layout_height="wrap_content"
+   	     android:layout_below="@+id/divider_activity"
+   	     android:layout_marginLeft="5dp"
+   	     android:layout_marginTop="10dp"/>
+
+   	<fragment
+   	    android:id="@+id/LogIn_Bottom"
+   	    android:name="de.hdm.mobile.health.fragment.BottomLogInFragment"
+   	    android:layout_width="wrap_content"
+   	    android:layout_below="@+id/ActivityLevel"
+   	    android:layout_height="@dimen/bottom_height"
+   	    android:layout_alignParentBottom="true"
+   	    android:layout_alignParentLeft="true"
+   	    tools:layout="@layout/bottom_login_fragment" />
+
+
+ </RelativeLayout>

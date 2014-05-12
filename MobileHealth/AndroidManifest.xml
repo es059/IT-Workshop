@@ -10,17 +10,25 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="de.hdm.mobile.health.LogIn"
+            android:name="de.hdm.mobile.health.HelperActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="de.hdm.mobile.health.LogIn"
+            android:label="@string/title_activity_log_in" >
+        </activity>
+        <activity
+            android:name="de.hdm.mobile.health.Disclaimer"
+            android:label="@string/title_activity_disclaimer" >
         </activity>
     </application>
 

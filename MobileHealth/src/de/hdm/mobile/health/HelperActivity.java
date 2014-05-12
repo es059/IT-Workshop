@@ -12,9 +12,9 @@ public class HelperActivity extends Activity  {
 	public void onCreate(Bundle savedInstanceState){
 	    super.onCreate(savedInstanceState);
 		if (!firstTimeCheck()){
-			startActivity(new Intent(this, LogIn.class));
+			startActivity(new Intent(this, Disclaimer.class));
 		}else{
-			startActivity(new Intent(this, LogIn.class));
+			startActivity(new Intent(this, Disclaimer.class));
 		    finish();
 		}
 	}

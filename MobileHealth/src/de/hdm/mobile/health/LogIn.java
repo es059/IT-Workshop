@@ -1,16 +1,12 @@
 package de.hdm.mobile.health;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.preference.PreferenceManager;
 /**
  * This class represents the LogIn GUI. The User has the choice to
@@ -18,14 +14,24 @@ import android.preference.PreferenceManager;
  * 
  * @author Eric Schmidt
  */
-public class LogIn extends Activity {
+public class LogIn extends Activity{
 	private static final String PREF_FIRST_LAUNCH = "first";
 	
+	/**
+	 * Assign the Layout to the Activity and fill the spinner with the activity levels
+	 * 
+	 * @author Eric Schmidt
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_log_in);
-
+		setContentView(R.layout.activity_login);
+		
+		
+		Spinner activityLevelSpinner = (Spinner) findViewById(de.hdm.mobile.health.R.id.ActivityLevel);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+		        R.array.activity_level, android.R.layout.simple_spinner_item);
+		activityLevelSpinner.setAdapter(adapter);
 	}
 
 	@Override
@@ -60,5 +66,4 @@ public class LogIn extends Activity {
 		editor.putBoolean(PREF_FIRST_LAUNCH, firstTime);
 		editor.commit();
 	}
-
 }

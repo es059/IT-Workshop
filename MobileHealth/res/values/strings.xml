@@ -2,8 +2,14 @@
 <resources>
 
     <string name="app_name">Mobile Health</string>
-    <string name="title_activity_log_in">LogIn</string>
+    <string name="title_activity_log_in">Account Erstellen</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="title_activity_disclaimer">Disclaimer</string>
+	<string-array name="activity_level">
+	    <item>Gering</item>
+        <item>Normal</item>
+        <item>Hoch</item>
+        <item>Sehr Hoch</item>
+	</string-array>
 </resources>

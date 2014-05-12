@@ -1,0 +1,29 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.hdm.mobile.health.Disclaimer"
+    tools:ignore="MergeRootFrame" >
+
+    <TextView
+        android:id="@+id/Disclaimer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:maxLines="35"
+        android:scrollbars="vertical"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+   	<fragment
+   	    android:id="@+id/LogIn_Bottom"
+   	    android:name="de.hdm.mobile.health.fragment.BottomLogInFragment"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_alignParentBottom="true"
+   	    android:layout_alignParentLeft="true"
+   	    android:layout_below="@+id/Disclaimer"
+   	    tools:layout="@layout/bottom_login_fragment" />
+
+</FrameLayout>
+

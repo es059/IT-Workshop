@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="3"
-        android:gravity="center"
-        android:text="Nutzerdaten"
+        android:layout_marginLeft="5dp"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:gravity="left"
+        android:text="Nutzerdaten eingeben"
         android:textStyle="bold" />
 </LinearLayout>
