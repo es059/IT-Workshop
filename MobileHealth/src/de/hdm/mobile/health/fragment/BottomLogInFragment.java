@@ -4,6 +4,7 @@ import de.hdm.mobile.health.Disclaimer;
 import de.hdm.mobile.health.LogIn;
 import de.hdm.mobile.health.R;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -76,21 +77,27 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		Intent intent = new Intent();
+		Bundle bundleanimation = null;
+		bundleanimation = ActivityOptions.makeCustomAnimation(getActivity(), 
+				R.anim.slide_in_left,R.anim.slide_over_left).toBundle();	
 		switch(v.getId()){
 			case R.id.bottom_next:
+			
 				if(currentActivity instanceof Disclaimer){
 					intent.setClass(getActivity(), LogIn.class);
 				} else{
 					intent.setClass(getActivity(), LogIn.class);
 				}
-				startActivity(intent);
+				startActivity(intent,bundleanimation);
 			case R.id.bottom_previous:
+				//bundleanimation = ActivityOptions.makeCustomAnimation(getActivity(), 
+						//R.anim.slide_over_right,R.anim.slide_in_right).toBundle();
 				if(currentActivity instanceof Disclaimer){
 					
 				} else{
 					intent.setClass(getActivity(), Disclaimer.class);
 				}
-				startActivity(intent);
+				startActivity(intent,bundleanimation);
 		}
 	
 		
