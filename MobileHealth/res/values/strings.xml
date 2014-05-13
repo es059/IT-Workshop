@@ -5,7 +5,7 @@
     <string name="title_activity_log_in">Account Erstellen</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_disclaimer">Disclaimer</string>
+    <string name="title_activity_disclaimer">Haftungsausschluss</string>
 
     <string-array name="activity_level">
         <item>Gering</item>
@@ -15,5 +15,6 @@
     </string-array>
 
     <string name="title_activity_login_advanced">LoginAdvanced</string>
+    <string name="title_activity_scanning">Scanning</string>
 
 </resources>

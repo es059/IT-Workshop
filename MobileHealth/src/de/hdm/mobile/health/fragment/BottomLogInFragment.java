@@ -4,17 +4,21 @@ import de.hdm.mobile.health.Disclaimer;
 import de.hdm.mobile.health.LogIn;
 import de.hdm.mobile.health.LoginAdvanced;
 import de.hdm.mobile.health.R;
+import de.hdm.mobile.health.Scanning;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.transition.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 /**
  * This class handles the behavior of the 'Next Arrow' Button 
  * 
@@ -23,8 +27,8 @@ import android.widget.ImageButton;
 public class BottomLogInFragment extends Fragment implements OnClickListener{
 	
 	private Activity currentActivity = null;
-	private ImageButton next = null;
-	private ImageButton previous = null;
+	private Button next = null;
+	private Button previous = null;
 	
 	/**
 	 * Sets the Layout of the Fragment and references the direction Buttons to 
@@ -39,8 +43,8 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 		View view = inflater.inflate(de.hdm.mobile.health.R.layout.bottom_login_fragment,
 				container,false);
 		
-		next = (ImageButton) view.findViewById(R.id.bottom_next);
-		previous = (ImageButton) view.findViewById(R.id.bottom_previous);
+		next = (Button) view.findViewById(R.id.bottom_next);
+		previous = (Button) view.findViewById(R.id.bottom_previous);
 		
 		if(currentActivity instanceof Disclaimer){
 			previous.setVisibility(View.INVISIBLE);
@@ -53,6 +57,19 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 		return view;
 		
 	}
+	
+	/**
+	 * Set the Text of the next Button according to the
+	 * current Activity
+	 * 
+	 * @author Eric Schmidt
+	 */
+	@Override
+	public void onResume(){
+		super.onResume();
+
+	}
+	
 	/**
 	 * Overrides the Method onAttach of the class Fragemnt and
 	 * sets the reference of the class Variable currentActivity to
@@ -85,10 +102,12 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 			case R.id.bottom_next:
 				if(currentActivity instanceof Disclaimer){
 					intent.setClass(getActivity(), LogIn.class);
+					
 				} else if (currentActivity instanceof LogIn){
 					intent.setClass(getActivity(), LoginAdvanced.class);
 				} else{
-					intent.setClass(getActivity(), LogIn.class);
+					intent.setClass(getActivity(), Scanning.class);
+					Toast.makeText(getActivity(), "Account wurde angelegt", Toast.LENGTH_SHORT).show();
 				}
 				startActivity(intent,bundleanimation);
 				break;
