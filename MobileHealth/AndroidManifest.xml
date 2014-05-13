@@ -30,6 +30,10 @@
             android:name="de.hdm.mobile.health.Disclaimer"
             android:label="@string/title_activity_disclaimer" >
         </activity>
+        <activity
+            android:name="de.hdm.mobile.health.LoginAdvanced"
+            android:label="@string/title_activity_login_advanced" >
+        </activity>
     </application>
 
 </manifest>

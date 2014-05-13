@@ -6,10 +6,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_disclaimer">Disclaimer</string>
-	<string-array name="activity_level">
-	    <item>Gering</item>
+
+    <string-array name="activity_level">
+        <item>Gering</item>
         <item>Normal</item>
         <item>Hoch</item>
         <item>Sehr Hoch</item>
-	</string-array>
+    </string-array>
+
+    <string name="title_activity_login_advanced">LoginAdvanced</string>
+
 </resources>

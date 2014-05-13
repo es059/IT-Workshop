@@ -28,10 +28,7 @@ public class LogIn extends Activity{
 		setContentView(R.layout.activity_login);
 		
 		
-		Spinner activityLevelSpinner = (Spinner) findViewById(de.hdm.mobile.health.R.id.ActivityLevel);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		        R.array.activity_level, android.R.layout.simple_spinner_item);
-		activityLevelSpinner.setAdapter(adapter);
+		
 	}
 
 	@Override

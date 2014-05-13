@@ -2,6 +2,7 @@ package de.hdm.mobile.health.fragment;
 
 import de.hdm.mobile.health.Disclaimer;
 import de.hdm.mobile.health.LogIn;
+import de.hdm.mobile.health.LoginAdvanced;
 import de.hdm.mobile.health.R;
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -82,22 +83,25 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 				R.anim.slide_in_left,R.anim.slide_over_left).toBundle();	
 		switch(v.getId()){
 			case R.id.bottom_next:
-			
 				if(currentActivity instanceof Disclaimer){
 					intent.setClass(getActivity(), LogIn.class);
+				} else if (currentActivity instanceof LogIn){
+					intent.setClass(getActivity(), LoginAdvanced.class);
 				} else{
 					intent.setClass(getActivity(), LogIn.class);
 				}
 				startActivity(intent,bundleanimation);
+				break;
 			case R.id.bottom_previous:
-				//bundleanimation = ActivityOptions.makeCustomAnimation(getActivity(), 
-						//R.anim.slide_over_right,R.anim.slide_in_right).toBundle();
 				if(currentActivity instanceof Disclaimer){
 					
-				} else{
+				} else if (currentActivity instanceof LogIn){
 					intent.setClass(getActivity(), Disclaimer.class);
+				} else{
+					intent.setClass(getActivity(), LogIn.class);
 				}
 				startActivity(intent,bundleanimation);
+				break;
 		}
 	
 		

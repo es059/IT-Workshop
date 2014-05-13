@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.hdm.mobile.health.LoginAdvanced"
+    tools:ignore="MergeRootFrame" 
+    android:orientation="vertical">
+    
+   	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1" >	  
+	    
+   	   <View
+	  	    android:id="@+id/divider_gender"
+			style="@style/DividerLogin"	
+		    android:layout_below="@+id/Weight"/>	
+	   <TextView
+	   	    android:id="@+id/textView_gender"
+	   	    style="@style/TextViewLogin"
+	   	    android:layout_above="@+id/divider_gender"
+	   	    android:layout_alignBottom="@+id/divider_gender"
+	   	    android:text="Geschlecht" />
+	   	
+
+	  	
+	    <RadioGroup
+	        android:id="@+id/RadioButton_Group"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@+id/divider_gender"
+		    android:orientation="vertical">	 
+		   	 <RadioButton
+		   	     android:id="@+id/Gender_male"
+		   	     android:layout_width="fill_parent"
+		   	     android:layout_height="wrap_content"
+		   	     android:layout_marginLeft="5dp"
+		   	     android:layout_marginTop="10dp"
+		   	     android:text="Männlich" />
+		   	 
+		   	 <RadioButton
+		   	     android:id="@+id/Gender_female"
+		   	     android:layout_width="fill_parent"
+		   	     android:layout_height="wrap_content"
+		   	     android:layout_marginLeft="5dp"
+		   	     android:layout_marginTop="10dp"
+		   	     android:text="Weiblich" />
+		</RadioGroup>
+		
+	   	<View
+	  	    android:id="@+id/divider_activity"
+		    style="@style/DividerLogin"
+		    android:layout_below="@+id/RadioButton_Group"/>
+	    <TextView
+	   	    android:id="@+id/textView_activity"
+	   	    style="@style/TextViewLogin"
+	   	    android:layout_above="@+id/divider_activity"
+	   	    android:layout_alignBottom="@+id/divider_activity"
+	   	    android:text="Aktivitätsniveau" />
+	    
+	   	<Spinner
+	   	     android:id="@+id/ActivityLevel"
+	   	     android:layout_width="fill_parent"
+	   	     android:layout_height="wrap_content"
+	   	     android:layout_below="@+id/divider_activity"
+	   	     android:layout_marginLeft="5dp"
+	   	     android:layout_marginTop="10dp"/>	
+	</RelativeLayout>
+	<fragment
+	   	    android:id="@+id/LogIn_Bottom"
+	   	    android:name="de.hdm.mobile.health.fragment.BottomLogInFragment"
+	   	    android:layout_width="wrap_content"
+	   	    android:layout_weight="0.2"
+	   	    android:layout_height="@dimen/bottom_height"
+	   	    android:layout_alignParentBottom="true"
+	   	    android:layout_alignParentLeft="true"
+	   	    tools:layout="@layout/bottom_login_fragment" />
+ </LinearLayout>
+
