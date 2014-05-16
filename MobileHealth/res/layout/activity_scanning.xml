@@ -5,30 +5,108 @@
     android:layout_height="match_parent"
     tools:context="de.hdm.mobile.health.Scanning"
     tools:ignore="MergeRootFrame" >
-
-    <Button
-        android:id="@+id/scan_button"
+    
+	<View
+	  	android:id="@+id/divider_general"
+		style="@style/DividerLogin"/>
+		
+	<TextView
+	   	android:id="@+id/textView_general"
+	   	android:layout_above="@+id/divider_general"
+	   	android:layout_alignBottom="@+id/divider_general"
+	   	style="@style/TextViewLogin"
+	   	android:text="Neues Lebensmittel" />
+	
+	<!-- I/O Views -->
+	
+	<EditText
+        android:id="@+id/scan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/divider_general"
+        android:layout_marginTop="27dp"
+        android:ems="10"
+        android:hint="Name" >
+
+    </EditText>
 
     <TextView
-        android:id="@+id/scan_format"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button1"
-        android:layout_below="@+id/button1"
-        android:layout_marginTop="38dp"
-        android:text="TextView" />
-
+        android:layout_alignBaseline="@+id/scan_name"
+        android:layout_alignBottom="@+id/scan_name"
+        android:layout_alignLeft="@+id/textView_general"
+        android:text="Name:" />
+	 
+    <EditText
+        android:id="@+id/scan_carb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/scan_name"
+        android:ems="10"
+        android:hint="Kohlenhydrate" />
+    
     <TextView
-        android:id="@+id/scan_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:text="TextView" />
+        android:layout_alignBaseline="@+id/scan_carb"
+        android:layout_alignBottom="@+id/scan_carb"
+        android:layout_alignLeft="@+id/textView_general"
+        android:text="Kohlenhydrate:" />
+
+    <EditText
+        android:id="@+id/scan_kalc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scan_carb"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="Kalorien" />
+    
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/scan_kalc"
+        android:layout_alignBottom="@+id/scan_kalc"
+        android:layout_alignLeft="@+id/textView_general"
+        android:text="Kalorien:" />
+
+    <EditText
+        android:id="@+id/scan_fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scan_kalc"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="Fett" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/scan_fat"
+        android:layout_alignBottom="@+id/scan_fat"
+        android:layout_alignLeft="@+id/textView_general"
+        android:text="Fett:" />
+
+    <EditText
+        android:id="@+id/scan_protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scan_fat"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="Protein" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/scan_protein"
+        android:layout_alignBottom="@+id/scan_protein"
+        android:layout_alignLeft="@+id/textView_general"
+        android:text="Eiweiß:" />
+
 
 </RelativeLayout>
 
