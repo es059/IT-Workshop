@@ -4,7 +4,7 @@ import de.hdm.mobile.health.Disclaimer;
 import de.hdm.mobile.health.LogIn;
 import de.hdm.mobile.health.LoginAdvanced;
 import de.hdm.mobile.health.R;
-import de.hdm.mobile.health.Scanning;
+import de.hdm.mobile.health.AddFood;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Fragment;
@@ -106,7 +106,7 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 				} else if (currentActivity instanceof LogIn){
 					intent.setClass(getActivity(), LoginAdvanced.class);
 				} else{
-					intent.setClass(getActivity(), Scanning.class);
+					intent.setClass(getActivity(), AddFood.class);
 					Toast.makeText(getActivity(), "Account wurde angelegt", Toast.LENGTH_SHORT).show();
 				}
 				startActivity(intent,bundleanimation);

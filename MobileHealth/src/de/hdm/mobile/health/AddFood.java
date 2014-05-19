@@ -1,6 +1,7 @@
 package de.hdm.mobile.health;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import org.jsoup.Jsoup;
@@ -11,6 +12,8 @@ import org.jsoup.select.Elements;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import de.hdm.mobile.health.bo.Food;
+import de.hdm.mobile.health.db.FoodMapper;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -31,14 +34,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Build;
 
-public class Scanning extends Activity{
+public class AddFood extends Activity{
 	
-	private EditText formatTxt, contentTxt;
+	public String barcode;
+	private EditText fat, protein, carb, cal, name;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_scanning);
+		setContentView(R.layout.activity_add_food);
 		
 	}
 
@@ -46,7 +50,7 @@ public class Scanning extends Activity{
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.scanning, menu);
+		getMenuInflater().inflate(R.menu.add_food, menu);
 		return true;
 	}
 
@@ -56,12 +60,43 @@ public class Scanning extends Activity{
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-			scanIntegrator.initiateScan();
-			new BackGroundTask(Scanning.this).execute("42143529");
-		}
+		switch(id){
+			case R.id.action_settings:
+				IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+				scanIntegrator.initiateScan();
+				break;
+			case R.id.action_save:
+				if (saveFood()){
+				    Toast toast = Toast.makeText(getApplicationContext(), 
+					        "Neues Lebensmittel wurde angelegt", Toast.LENGTH_SHORT);
+					toast.show();
+				};
+				break;
+			}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Save the current entered food into the databse
+	 * 
+	 * @return true if success
+	 * @author Eric Schmidt
+	 */
+	private Boolean saveFood() {
+		// TODO Auto-generated method stub
+		Food food = new Food();
+		if (name.getText().toString() != ""){	
+			food.setBarcode(barcode);
+			food.setCalories(Double.parseDouble(cal.getText().toString()));
+			food.setCarbs(Double.parseDouble(carb.getText().toString()));
+			food.setFat(Double.parseDouble(fat.getText().toString()));
+			food.setName(name.getText().toString());
+			food.setProtein(Double.parseDouble(protein.getText().toString()));
+			FoodMapper fMapper = new FoodMapper(this);
+			fMapper.add(food);
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -77,12 +112,13 @@ public class Scanning extends Activity{
 			 * attributes for the new grocery 
 			 * 
 			 */
-			new BackGroundTask(Scanning.this).execute(scanningResult.getContents());
+			barcode = scanningResult.getContents();
+			new BackGroundTask(AddFood.this).execute(barcode);
 
 		}else{
 		    Toast toast = Toast.makeText(getApplicationContext(), 
 		        "No scan data received!", Toast.LENGTH_SHORT);
-		        toast.show();
+		    toast.show();
 		}
 	}
 	
@@ -92,18 +128,17 @@ public class Scanning extends Activity{
 	 * @author Eric Schmidt
 	 */
 	public class BackGroundTask extends AsyncTask<String, Void, Void> {
-		private EditText fat, protein, carb, cal, name;
 		private String fatString, proteinString, carbString, calString, nameString;
 		private ProgressDialog mDialog;
 		
-		public BackGroundTask (Scanning activity){
+		public BackGroundTask (AddFood activity){
 			fat = (EditText)findViewById(R.id.scan_fat);
 			protein = (EditText)findViewById(R.id.scan_protein);
 			carb = (EditText)findViewById(R.id.scan_carb);
 			cal = (EditText)findViewById(R.id.scan_kalc);
 			name = (EditText)findViewById(R.id.scan_name);
 			
-		    mDialog = new ProgressDialog(Scanning.this);
+		    mDialog = new ProgressDialog(AddFood.this);
 		    mDialog.setProgressStyle(ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT);
 		    mDialog.setMessage("Lade Information");
 		    mDialog.setCancelable(false);
@@ -120,8 +155,17 @@ public class Scanning extends Activity{
 	    protected Void doInBackground(String... params) {
 
 			try {
-				Document doc = Jsoup.connect("http://www.barcoo.com/" + params[0].toString() + "?source=pb/").get();
+				/**
+				 * Fetch Data from barcoo and set the corresponding TextViews with
+				 * the according information
+				 * 
+				 * @author Eric Schmidt
+				 */
+				String url = "http://www.barcoo.com/" + params[0].toString() + "?source=pb/";
+				Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
+				//Document doc = Jsoup.connect("http://www.barcoo.com/" + params[0].toString() + "?source=pb/").get();
 				nameString = doc.title();
+				String[] tempSplit;
 				String[] splitResult = nameString.split("-");
 				nameString = splitResult[0];
 				Elements nutritionTable = doc.select(".nutTbl");	
@@ -130,16 +174,20 @@ public class Scanning extends Activity{
 					 Elements tds = row.select("td");
 					 switch(tds.get(0).text()){
 						 case "Kohlenhydrate":
-							 carbString=tds.get(1).text();
+							 tempSplit = tds.get(1).text().split(" ");
+							 carbString= tempSplit[0];
 							 break;
 						 case "Fett":
-							 fatString=tds.get(1).text();
+							 tempSplit = tds.get(1).text().split(" ");
+							 fatString=tempSplit[0];
 							 break;
 						 case "Eiweiﬂ":
-							 proteinString=tds.get(1).text();
+							 tempSplit = tds.get(1).text().split(" ");
+							 proteinString=tempSplit[0];
 							 break;
 						 case "Kalorien":
-							 calString=tds.get(1).text();
+							 tempSplit = tds.get(1).text().split(" ");
+							 calString=tempSplit[0];
 							 break;
 					 }
 				}

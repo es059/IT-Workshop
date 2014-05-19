@@ -14,7 +14,7 @@ public class HelperActivity extends Activity  {
 		if (!firstTimeCheck()){
 			startActivity(new Intent(this, Disclaimer.class));
 		}else{
-			startActivity(new Intent(this, Scanning.class));
+			startActivity(new Intent(this, AddFood.class));
 		    finish();
 		}
 	}
