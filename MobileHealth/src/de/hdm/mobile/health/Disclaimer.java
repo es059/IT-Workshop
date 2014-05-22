@@ -2,37 +2,42 @@ package de.hdm.mobile.health;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class Disclaimer extends Activity{
+public class Disclaimer extends Fragment{
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_disclaimer);
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.disclaimer, menu);
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+	    View view = inflater.inflate(R.layout.fragment_disclaimer,
+	            container, false);
+	    return view;
 	}
 	
 	/**
 	 * Load the disclaimer information text into the TextView
 	 */
 	@Override
-	protected void onResume(){
+	public void onResume(){
 		super.onResume();
-		TextView disclaimer = (TextView) findViewById(R.id.Disclaimer);
+		TextView disclaimer = (TextView) getView().findViewById(R.id.Disclaimer);
 		disclaimer.setText(R.string.disclaimer);
 		disclaimer.setTextSize(10);
 		disclaimer.setMovementMethod(new ScrollingMovementMethod());
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.disclaimer, menu);
-		return true;
 	}
 
 	@Override

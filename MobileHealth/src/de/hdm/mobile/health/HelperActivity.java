@@ -4,18 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 
-public class HelperActivity extends Activity  {
+public class HelperActivity extends FragmentActivity  {
 	private static final String PREF_FIRST_LAUNCH = "first";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 	    super.onCreate(savedInstanceState);
 		if (!firstTimeCheck()){
-			startActivity(new Intent(this, Disclaimer.class));
+			Disclaimer d = new Disclaimer();
+			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
+			//startActivity(new Intent(this, Disclaimer.class));
 		}else{
-			startActivity(new Intent(this, AddFood.class));
-		    finish();
+			Disclaimer d = new Disclaimer();
+			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
+			//startActivity(new Intent(this, AddFood.class));
+		   // finish();
 		}
 	}
 	/**

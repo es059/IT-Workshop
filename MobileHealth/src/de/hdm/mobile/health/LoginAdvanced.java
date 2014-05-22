@@ -18,7 +18,7 @@ public class LoginAdvanced extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login_advanced);
+		setContentView(R.layout.fragment_login_advanced);
 
 		Spinner activityLevelSpinner = (Spinner) findViewById(de.hdm.mobile.health.R.id.ActivityLevel);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

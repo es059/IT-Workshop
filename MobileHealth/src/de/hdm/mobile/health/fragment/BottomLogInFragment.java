@@ -46,11 +46,14 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 		next = (Button) view.findViewById(R.id.bottom_next);
 		previous = (Button) view.findViewById(R.id.bottom_previous);
 		
-		if(currentActivity instanceof Disclaimer){
+		//TODO
+		/**
+		if(currentActivity.getFragmentManager() instanceof Disclaimer){
 			previous.setVisibility(View.INVISIBLE);
 		} else{
 			previous.setVisibility(View.VISIBLE);
 		}
+		**/
 		
 		previous.setOnClickListener(this);
 		next.setOnClickListener(this);
@@ -100,7 +103,7 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 				R.anim.slide_in_left,R.anim.slide_over_left).toBundle();	
 		switch(v.getId()){
 			case R.id.bottom_next:
-				if(currentActivity instanceof Disclaimer){
+				if(currentActivity instanceof LogIn){ //Verweis auf Disclaimer!
 					intent.setClass(getActivity(), LogIn.class);
 					
 				} else if (currentActivity instanceof LogIn){
@@ -112,9 +115,9 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 				startActivity(intent,bundleanimation);
 				break;
 			case R.id.bottom_previous:
-				if(currentActivity instanceof Disclaimer){
+				if(currentActivity instanceof LogIn){
 					
-				} else if (currentActivity instanceof LogIn){
+				} else if (currentActivity instanceof LogIn){ //Verweis auf Disclaimer!
 					intent.setClass(getActivity(), Disclaimer.class);
 				} else{
 					intent.setClass(getActivity(), LogIn.class);

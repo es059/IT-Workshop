@@ -13,7 +13,6 @@ public class FoodMapper {
 	
 	private DataBaseHelper myDBHelper;
 	private String sql;
-	private int mgID;
 	
 	public FoodMapper(Context context){
 		myDBHelper = new DataBaseHelper(context);

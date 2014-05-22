@@ -42,7 +42,7 @@ public class AddFood extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_food);
+		setContentView(R.layout.add_food);
 		
 	}
 
