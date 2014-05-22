@@ -57,5 +57,10 @@ public class FoodMapper {
 		db.execSQL(sql);
 		db.close();
 	}
+
+	public ArrayList<Food> searchKeyString(String valueOf) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
