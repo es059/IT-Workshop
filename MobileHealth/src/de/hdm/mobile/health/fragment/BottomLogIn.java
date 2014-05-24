@@ -1,30 +1,23 @@
 package de.hdm.mobile.health.fragment;
 
-import de.hdm.mobile.health.Disclaimer;
-import de.hdm.mobile.health.LogIn;
-import de.hdm.mobile.health.LoginAdvanced;
 import de.hdm.mobile.health.R;
-import de.hdm.mobile.health.AddFood;
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.app.Fragment;
-import android.content.Intent;
-import android.graphics.Paint.Align;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.transition.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+
 import android.widget.Toast;
 /**
  * This class handles the behavior of the 'Next Arrow' Button 
  * 
  * @author Eric Schmidt
  */
-public class BottomLogInFragment extends Fragment implements OnClickListener{
+public class BottomLogIn extends Fragment implements OnClickListener{
 	
 	private Activity currentActivity = null;
 	private Button next = null;
@@ -33,46 +26,24 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 	/**
 	 * Sets the Layout of the Fragment and references the direction Buttons to 
 	 * the associated class variables and sets the ClickListener for them.
-	 * Sets the Visibility of the previous Button according to the currentActivity.
 	 * 
 	 * @author Eric Schmidt
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(de.hdm.mobile.health.R.layout.bottom_login_fragment,
+		View view = inflater.inflate(de.hdm.mobile.health.R.layout.fragment_bottom_login,
 				container,false);
 		
 		next = (Button) view.findViewById(R.id.bottom_next);
 		previous = (Button) view.findViewById(R.id.bottom_previous);
-		
-		//TODO
-		/**
-		if(currentActivity.getFragmentManager() instanceof Disclaimer){
-			previous.setVisibility(View.INVISIBLE);
-		} else{
-			previous.setVisibility(View.VISIBLE);
-		}
-		**/
 		
 		previous.setOnClickListener(this);
 		next.setOnClickListener(this);
 		return view;
 		
 	}
-	
-	/**
-	 * Set the Text of the next Button according to the
-	 * current Activity
-	 * 
-	 * @author Eric Schmidt
-	 */
-	@Override
-	public void onResume(){
-		super.onResume();
 
-	}
-	
 	/**
 	 * Overrides the Method onAttach of the class Fragemnt and
 	 * sets the reference of the class Variable currentActivity to
@@ -85,7 +56,6 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 		super.onAttach(activity);
 		currentActivity = activity;
 	}
-
 	
 	/**
 	 * Implements the Method onClick of the Interface 
@@ -97,34 +67,36 @@ public class BottomLogInFragment extends Fragment implements OnClickListener{
 	 */
 	@Override
 	public void onClick(View v) {
-		Intent intent = new Intent();
-		Bundle bundleanimation = null;
-		bundleanimation = ActivityOptions.makeCustomAnimation(getActivity(), 
-				R.anim.slide_in_left,R.anim.slide_over_left).toBundle();	
+	    FragmentTransaction transaction = currentActivity.getFragmentManager().beginTransaction();
+        	
 		switch(v.getId()){
 			case R.id.bottom_next:
-				if(currentActivity instanceof LogIn){ //Verweis auf Disclaimer!
-					intent.setClass(getActivity(), LogIn.class);
-					
-				} else if (currentActivity instanceof LogIn){
-					intent.setClass(getActivity(), LoginAdvanced.class);
+				if( currentActivity.getFragmentManager().findFragmentByTag("Disclaimer").isVisible()){
+					transaction.replace(R.id.fragment_container, new LogIn(), "LogIn");
+				} else if (currentActivity.getFragmentManager().findFragmentByTag("LogIn").isVisible()){
+					transaction.replace(R.id.fragment_container, new LoginAdvanced(), "LogInAdvanced");
 				} else{
-					intent.setClass(getActivity(), AddFood.class);
+					transaction.replace(R.id.fragment_container, new AddFood(), "AddFood");
+					/**
+					 * Hide the Bottom Fragment and inform the user that a new Account was created
+					 */
+					transaction.remove(currentActivity.getFragmentManager().findFragmentById(R.id.LogIn_Bottom));
 					Toast.makeText(getActivity(), "Account wurde angelegt", Toast.LENGTH_SHORT).show();
-				}
-				startActivity(intent,bundleanimation);
+				}	
 				break;
 			case R.id.bottom_previous:
-				if(currentActivity instanceof LogIn){
+				if(currentActivity.getFragmentManager().findFragmentByTag("Disclaimer").isVisible()){
 					
-				} else if (currentActivity instanceof LogIn){ //Verweis auf Disclaimer!
-					intent.setClass(getActivity(), Disclaimer.class);
+				} else if (currentActivity.getFragmentManager().findFragmentByTag("LogIn").isVisible()){
+					transaction.replace(R.id.fragment_container, new Disclaimer(), "Disclaimer");
 				} else{
-					intent.setClass(getActivity(), LogIn.class);
+					transaction.replace(R.id.fragment_container, new LogIn(), "LogIn");
 				}
-				startActivity(intent,bundleanimation);
 				break;
 		}
+		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.addToBackStack(null);
+        transaction.commit();
 	
 		
 	}
