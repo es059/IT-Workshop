@@ -1,8 +1,7 @@
-package de.hdm.mobile.health;
+package de.hdm.mobile.health.fragment;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.concurrent.ExecutionException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,47 +11,41 @@ import org.jsoup.select.Elements;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import de.hdm.mobile.health.R;
 import de.hdm.mobile.health.bo.Food;
 import de.hdm.mobile.health.db.FoodMapper;
-import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
 
-public class AddFood extends Activity{
+public class AddFood extends Fragment{
 	
 	public String barcode;
 	private EditText fat, protein, carb, cal, name;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_food);
-		
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	    View view = inflater.inflate(R.layout.add_food, container, false);
+	    setHasOptionsMenu(true); 
+		return view;	
 	}
-
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.add_food, menu);
-		return true;
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.add_food, menu);
 	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -67,7 +60,7 @@ public class AddFood extends Activity{
 				break;
 			case R.id.action_save:
 				if (saveFood()){
-				    Toast toast = Toast.makeText(getApplicationContext(), 
+				    Toast toast = Toast.makeText(getActivity(), 
 					        "Neues Lebensmittel wurde angelegt", Toast.LENGTH_SHORT);
 					toast.show();
 				};
@@ -92,7 +85,7 @@ public class AddFood extends Activity{
 			food.setFat(Double.parseDouble(fat.getText().toString()));
 			food.setName(name.getText().toString());
 			food.setProtein(Double.parseDouble(protein.getText().toString()));
-			FoodMapper fMapper = new FoodMapper(this);
+			FoodMapper fMapper = new FoodMapper(getActivity());
 			fMapper.add(food);
 			return true;
 		}
@@ -113,11 +106,14 @@ public class AddFood extends Activity{
 			 * 
 			 */
 			barcode = scanningResult.getContents();
-			new BackGroundTask(AddFood.this).execute(barcode);
-
+		    if(barcode != null){
+				new BackGroundTask(AddFood.this).execute(barcode);
+		    }else{
+			    Toast toast = Toast.makeText(getActivity(), "Barcode scanner wurde beendet", Toast.LENGTH_SHORT);
+			    toast.show();
+		    }
 		}else{
-		    Toast toast = Toast.makeText(getApplicationContext(), 
-		        "No scan data received!", Toast.LENGTH_SHORT);
+		    Toast toast = Toast.makeText(getActivity(), "No scan data received!", Toast.LENGTH_SHORT);
 		    toast.show();
 		}
 	}
@@ -132,13 +128,13 @@ public class AddFood extends Activity{
 		private ProgressDialog mDialog;
 		
 		public BackGroundTask (AddFood activity){
-			fat = (EditText)findViewById(R.id.scan_fat);
-			protein = (EditText)findViewById(R.id.scan_protein);
-			carb = (EditText)findViewById(R.id.scan_carb);
-			cal = (EditText)findViewById(R.id.scan_kalc);
-			name = (EditText)findViewById(R.id.scan_name);
+			fat = (EditText)getActivity().findViewById(R.id.scan_fat);
+			protein = (EditText)getActivity().findViewById(R.id.scan_protein);
+			carb = (EditText)getActivity().findViewById(R.id.scan_carb);
+			cal = (EditText)getActivity().findViewById(R.id.scan_kalc);
+			name = (EditText)getActivity().findViewById(R.id.scan_name);
 			
-		    mDialog = new ProgressDialog(AddFood.this);
+		    mDialog = new ProgressDialog(AddFood.this.getActivity());
 		    mDialog.setProgressStyle(ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT);
 		    mDialog.setMessage("Lade Information");
 		    mDialog.setCancelable(false);
