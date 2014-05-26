@@ -13,11 +13,11 @@ public class HelperActivity extends FragmentActivity  {
 	public void onCreate(Bundle savedInstanceState){
 	    super.onCreate(savedInstanceState);
 		if (!firstTimeCheck()){
-			Disclaimer d = new Disclaimer();
+			FoodLogFragment d = new FoodLogFragment();
 			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
 			//startActivity(new Intent(this, Disclaimer.class));
 		}else{
-			Disclaimer d = new Disclaimer();
+			FoodLogFragment d = new FoodLogFragment();
 			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
 			//startActivity(new Intent(this, AddFood.class));
 		   // finish();
