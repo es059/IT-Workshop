@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+   
+        <fragment
+            android:id="@+id/overview_dateTimePicker"
+            android:name="com.example.mobilehealth"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/actionbar_height"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout="@layout/actionbar_datepicker_fragment" />
+	
+         <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/overview_dateTimePicker" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/TVProtein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Eiweiss" />
+                
+                <TextView
+                    android:id="@+id/tvCarbs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KH" />
+                
+                <TextView
+                    android:id="@+id/tvFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fett" />
+                
+                <TextView
+                    android:id="@+id/tvKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="kcal" />
+                
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+                 <TextView
+                    android:id="@+id/rowNameIst"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ist" />
+                
+                <TextView
+                    android:id="@+id/currenProtein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/currentCarbs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/currentFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/currentKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+                
+                  <TextView
+                    android:id="@+id/rowNameSoll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Soll" />
+                
+                <TextView
+                    android:id="@+id/targetProtein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/targetCarbs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/targetFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/targetKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+                
+                 <TextView
+                    android:id="@+id/rowNameRemaining"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remaining" />
+                
+                <TextView
+                    android:id="@+id/remainingProtein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/remainingCarbs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/remainingFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                <TextView
+                    android:id="@+id/remainingKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+            </TableRow>
+
+            <ListView
+                android:id="@+id/foodList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </ListView>
+
+        </TableLayout>
+        
+ 
+       
+
+  
+    
+    
+    
+
+</LinearLayout>

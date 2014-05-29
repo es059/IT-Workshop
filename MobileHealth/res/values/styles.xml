@@ -28,15 +28,16 @@
         <item name="android:layout_centerInParent">true</item>
         <item name="android:layout_marginTop">10dp</item>       
     </style>
-    <!-- Devider theme for the LogIn Screens. -->
+    <!-- Devider theme -->
    	<style name="DividerLogin" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">3dp</item>
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:background">@android:color/darker_gray</item> 
+        <!-- Optional @android:color/darker_gray -->
+        <item name="android:background">@drawable/actionbar_green</item> 
     </style>
-    <!-- Text for Devider theme for the LogIn Screens. -->
+    <!-- Text for Devider -->
     <style name="TextViewLogin" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
