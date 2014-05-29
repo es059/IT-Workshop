@@ -14,10 +14,6 @@ public class Food {
 		
 	}
 	
-	public Food(String name) {
-		mName = name;
-	}
-
 	public String getName() {
 		return mName;
 	}

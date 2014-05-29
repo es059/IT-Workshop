@@ -1,12 +1,9 @@
 package de.hdm.mobile.health.db;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import de.hdm.mobile.health.bo.Food;
-import de.hdm.mobile.health.bo.Meal;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -59,79 +56,6 @@ public class FoodMapper {
 				+ ", " + f.getProtein() + ", " + f.getCarbs() + ", " + f.getFat() + ")";
 		db.execSQL(sql);
 		db.close();
-	}
-
-	public ArrayList<Food> searchKeyString(String valueOf) {
-		SQLiteDatabase db = myDBHelper.getWritableDatabase();
-	    ArrayList<Food> foodList = new ArrayList<Food>();
-	 
-
-
-
-	     sql =  "SELECT * FROM Uebung WHERE Bezeichung LIKE '%" + valueOf + "%'";
-	     Cursor cursor = db.rawQuery(sql, null);
-	     if (cursor.moveToFirst()) {
-	            do {
-	            	Food food = new Food();
-					food.setBarcode(cursor.getString(0));
-					food.setId(cursor.getInt(1));
-					food.setName(cursor.getString(2));
-					food.setKilojoule(cursor.getDouble(3));
-					food.setCalories(cursor.getDouble(4));
-					food.setProtein(cursor.getDouble(5));
-					food.setCarbs(cursor.getDouble(6));
-					food.setFat(cursor.getDouble(7));
-					foodList.add(food);
-
-	            } while (cursor.moveToNext());
-	        }
-
-	        cursor.close();
-
-
-	    return foodList;
-	}
-	
-	public Food getFoodById(int Id) {
-		  	Food food = new Food();
-		    SQLiteDatabase db = this.myDBHelper.getReadableDatabase();
-		    sql = "SELECT * FROM Food WHERE Food_Id = " + Id;
-		    Cursor cursor = db.rawQuery(sql, null);
-		    if (cursor.moveToFirst()){
-			   food.setBarcode(cursor.getString(0));
-			   food.setName(cursor.getString(2));
-			   food.setKilojoule(cursor.getDouble(3));
-			   food.setCalories(cursor.getDouble(4));
-			   food.setProtein(cursor.getDouble(5));
-			   food.setCarbs(cursor.getDouble(6));
-			   food.setFat(cursor.getDouble(7));
-		    }
-		    db.close();
-		    return food;
-	}
-
-	public ArrayList<Food> getAll() {
-		ArrayList<Food> foodList = new ArrayList<Food>();
-		SQLiteDatabase db = myDBHelper.getWritableDatabase();
-		sql = "SELECT * FROM Food";
-		Cursor cursor = db.rawQuery(sql, null);
-		if (cursor.moveToFirst()){
-			do{
-				Food food = new Food();
-				 food.setBarcode(cursor.getString(0));
-				 food.setId(cursor.getInt(1));
-				   food.setName(cursor.getString(2));
-				   food.setKilojoule(cursor.getDouble(3));
-				   food.setCalories(cursor.getDouble(4));
-				   food.setProtein(cursor.getDouble(5));
-				   food.setCarbs(cursor.getDouble(6));
-				   food.setFat(cursor.getDouble(7));
-				   foodList.add(food);
-				
-			}while(cursor.moveToNext());
-		}
-		db.close();
-		return foodList;
 	}
 }
 

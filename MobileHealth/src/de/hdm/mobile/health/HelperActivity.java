@@ -17,10 +17,6 @@ public class HelperActivity extends FragmentActivity  {
 		setContentView(R.layout.activity_helper);
 		
 		if (!firstTimeCheck()){
-
-			FoodLogFragment d = new FoodLogFragment();
-			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
-			//startActivity(new Intent(this, Disclaimer.class));
 			/**
 			 * Start the LogIn Workflow
 			 * 
@@ -31,14 +27,7 @@ public class HelperActivity extends FragmentActivity  {
 	        transaction.replace(R.id.fragment_container, new Disclaimer(), "Disclaimer");
 	        transaction.addToBackStack("Disclaimer");
 	        transaction.commit();
-
 		}else{
-
-			FoodLogFragment d = new FoodLogFragment();
-			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
-			//startActivity(new Intent(this, AddFood.class));
-		   // finish();
-
 			/**
 			 * Remove the LogIn Navigation Buttons and call the first Fragment
 			 * 
@@ -50,7 +39,6 @@ public class HelperActivity extends FragmentActivity  {
 	        transaction.replace(R.id.fragment_container, new AddFood(), "AddFood");
 	        transaction.addToBackStack(null);
 	        transaction.commit();
-
 		}
 	}
 	/**
