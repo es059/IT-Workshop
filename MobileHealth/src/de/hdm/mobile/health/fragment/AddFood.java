@@ -30,12 +30,20 @@ import android.widget.Toast;
 
 public class AddFood extends Fragment{
 
-	public String barcode;
-	private EditText fat, protein, carb, cal, name;
+	public String barcodeString;
+	private EditText fat, protein, carb, cal, name, barcode;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.add_food, container, false);
+	    
+		fat = (EditText)view.findViewById(R.id.scan_fat);
+		protein = (EditText)view.findViewById(R.id.scan_protein);
+		carb = (EditText)view.findViewById(R.id.scan_carb);
+		cal = (EditText)view.findViewById(R.id.scan_kalc);
+		name = (EditText)view.findViewById(R.id.scan_name);
+		barcode = (EditText)view.findViewById(R.id.scan_barcode);
+		
 	    setHasOptionsMenu(true); 
 		return view;	
 	}
@@ -79,7 +87,7 @@ public class AddFood extends Fragment{
 		// TODO Auto-generated method stub
 		Food food = new Food();
 		if (name.getText().toString() != ""){	
-			food.setBarcode(barcode);
+			food.setBarcode(barcodeString);
 			food.setCalories(Double.parseDouble(cal.getText().toString()));
 			food.setCarbs(Double.parseDouble(carb.getText().toString()));
 			food.setFat(Double.parseDouble(fat.getText().toString()));
@@ -105,9 +113,10 @@ public class AddFood extends Fragment{
 			 * attributes for the new grocery 
 			 * 
 			 */
-			barcode = scanningResult.getContents();
-		    if(barcode != null){
-				new BackGroundTask(AddFood.this).execute(barcode);
+			barcodeString = scanningResult.getContents();
+		    if(barcodeString != null){
+				new BackGroundTask(AddFood.this).execute(barcodeString);
+				barcode.setText(barcodeString);
 		    }else{
 			    Toast toast = Toast.makeText(getActivity(), "Barcode scanner wurde beendet", Toast.LENGTH_SHORT);
 			    toast.show();
@@ -128,12 +137,6 @@ public class AddFood extends Fragment{
 		private ProgressDialog mDialog;
 
 		public BackGroundTask (AddFood activity){
-			fat = (EditText)getActivity().findViewById(R.id.scan_fat);
-			protein = (EditText)getActivity().findViewById(R.id.scan_protein);
-			carb = (EditText)getActivity().findViewById(R.id.scan_carb);
-			cal = (EditText)getActivity().findViewById(R.id.scan_kalc);
-			name = (EditText)getActivity().findViewById(R.id.scan_name);
-
 		    mDialog = new ProgressDialog(AddFood.this.getActivity());
 		    mDialog.setProgressStyle(ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT);
 		    mDialog.setMessage("Lade Information");
