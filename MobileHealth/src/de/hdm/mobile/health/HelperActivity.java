@@ -25,7 +25,6 @@ public class HelperActivity extends FragmentActivity  {
 	        transaction.replace(R.id.fragment_container, new Disclaimer(), "Disclaimer");
 	        transaction.addToBackStack("Disclaimer");
 	        transaction.commit();
-
 		}else{
 			/**
 			 * Remove the LogIn Navigation Buttons and call the first Fragment
@@ -38,7 +37,6 @@ public class HelperActivity extends FragmentActivity  {
 	        transaction.replace(R.id.fragment_container, new AddFood(), "AddFood");
 	        transaction.addToBackStack(null);
 	        transaction.commit();
-
 		}
 	}
 	/**
