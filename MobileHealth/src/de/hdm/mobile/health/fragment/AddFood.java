@@ -29,23 +29,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddFood extends Fragment{
-	
+
 	public String barcode;
 	private EditText fat, protein, carb, cal, name;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.add_food, container, false);
 	    setHasOptionsMenu(true); 
 		return view;	
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.add_food, menu);
 	}
-	
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -117,7 +117,7 @@ public class AddFood extends Fragment{
 		    toast.show();
 		}
 	}
-	
+
 	/**
 	 * Handels the HTML parsing in an Async Task
 	 * 
@@ -126,21 +126,21 @@ public class AddFood extends Fragment{
 	public class BackGroundTask extends AsyncTask<String, Void, Void> {
 		private String fatString, proteinString, carbString, calString, nameString;
 		private ProgressDialog mDialog;
-		
+
 		public BackGroundTask (AddFood activity){
 			fat = (EditText)getActivity().findViewById(R.id.scan_fat);
 			protein = (EditText)getActivity().findViewById(R.id.scan_protein);
 			carb = (EditText)getActivity().findViewById(R.id.scan_carb);
 			cal = (EditText)getActivity().findViewById(R.id.scan_kalc);
 			name = (EditText)getActivity().findViewById(R.id.scan_name);
-			
+
 		    mDialog = new ProgressDialog(AddFood.this.getActivity());
 		    mDialog.setProgressStyle(ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT);
 		    mDialog.setMessage("Lade Information");
 		    mDialog.setCancelable(false);
 		    mDialog.setCanceledOnTouchOutside(false);
 		}
-		
+
 	    @Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
@@ -196,17 +196,17 @@ public class AddFood extends Fragment{
 	    @Override
 	    protected void onPostExecute(Void result) {
 	        super.onPostExecute(result);
-	        
+
 	        cal.setText(calString);
 	        protein.setText(proteinString);
 	        carb.setText(carbString);
 	        fat.setText(fatString);
 	        name.setText(nameString);
-	        
+
 	        if (mDialog.isShowing()) {
 	        	mDialog.dismiss();
 	        }
-	       
+
 	    }
 
 	}

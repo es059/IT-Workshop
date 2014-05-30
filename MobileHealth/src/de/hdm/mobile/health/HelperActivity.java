@@ -1,26 +1,20 @@
 package de.hdm.mobile.health;
 
+import de.hdm.mobile.health.db.UserMapper;
 import de.hdm.mobile.health.fragment.AddFood;
 import de.hdm.mobile.health.fragment.Disclaimer;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 
 
 public class HelperActivity extends FragmentActivity  {
-	private static final String PREF_FIRST_LAUNCH = "first";
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_helper);
 		
 		if (!firstTimeCheck()){
-
-			FoodLogFragment d = new FoodLogFragment();
-			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
-			//startActivity(new Intent(this, Disclaimer.class));
 			/**
 			 * Start the LogIn Workflow
 			 * 
@@ -33,12 +27,6 @@ public class HelperActivity extends FragmentActivity  {
 	        transaction.commit();
 
 		}else{
-
-			FoodLogFragment d = new FoodLogFragment();
-			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
-			//startActivity(new Intent(this, AddFood.class));
-		   // finish();
-
 			/**
 			 * Remove the LogIn Navigation Buttons and call the first Fragment
 			 * 
@@ -60,6 +48,7 @@ public class HelperActivity extends FragmentActivity  {
 	 * @author Eric Schmidt
 	 */
 	private boolean firstTimeCheck(){
-		return PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREF_FIRST_LAUNCH, true);
+		UserMapper uMapper = new UserMapper(this);
+		return uMapper.userExist();
 	}
 }
