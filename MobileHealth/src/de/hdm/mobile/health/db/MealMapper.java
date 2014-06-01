@@ -20,11 +20,13 @@ public class MealMapper {
 	private DataBaseHelper myDBHelper;
 	private String sql;
 	private Context context;
-	private FoodMapper foodMapper = new FoodMapper(context);
-	private MealTypeMapper mealTypeMapper = new MealTypeMapper(context);
+	private FoodMapper foodMapper; 
+	private MealTypeMapper mealTypeMapper;
 	
 	
 	public MealMapper(Context context){
+		foodMapper = new FoodMapper(context);
+		mealTypeMapper = new MealTypeMapper(context);
 		myDBHelper = new DataBaseHelper(context);
 		this.context = context;
 		try {	 
@@ -47,7 +49,7 @@ public class MealMapper {
 		
 		SQLiteDatabase db = myDBHelper.getWritableDatabase();
 		SimpleDateFormat sp = new SimpleDateFormat("dd.MM.yyyy");
-		sql = "SELECT * FROM Meal WHERE Day='" + date + "' AND WHERE Mealtype_Id=" + mealtype_Id;
+		sql = "SELECT * FROM Meal WHERE Day='" + sp.format(date) + "' AND Mealtyp_Id=" + mealtype_Id;
 		Cursor cursor = db.rawQuery(sql, null);
 		if (cursor.moveToFirst()){
 			do{
@@ -55,6 +57,7 @@ public class MealMapper {
 				m.setFood(foodMapper.getFoodById(cursor.getInt(1)));
 				m.setAmount(cursor.getDouble(2));
 				m.setMealtype(mealTypeMapper.getMealTypeById(cursor.getInt(3)));
+				mealsAday.add(m);
 				try {
 					m.setDate(sp.parse(cursor.getString(4)));
 				} catch (ParseException e) {
@@ -68,14 +71,14 @@ public class MealMapper {
 	}
 
 
-	public void addMeal(Meal m) {
+	public void addMeal(Meal m, int mt_Id) {
 		SQLiteDatabase db = myDBHelper.getWritableDatabase();
 		SimpleDateFormat sp = new SimpleDateFormat("dd.MM.yyyy");
 		String date = sp.format(m.getDate());
 			
-		sql = "INSERT INTO Meal (Food_Id, Amount, Mealtype_Id, Day)"
+		sql = "INSERT INTO Meal (Food_Id, Amount, Mealtyp_Id, Day)"
 				+ " VALUES ('" + m.getFood().getId() + "', " + m.getAmount()
-				+ ", '" + m.getMealtype().getId() + "',  " + date + ")";
+				+ ", '" + mt_Id + "',  '" + date + "')";
 		db.execSQL(sql);
 		db.close();
 		
@@ -86,7 +89,7 @@ public class MealMapper {
 		
 		SQLiteDatabase db = myDBHelper.getWritableDatabase();
 		SimpleDateFormat sp = new SimpleDateFormat("dd.MM.yyyy");
-		sql = "SELECT * FROM Meal WHERE Day='" + date + "'";
+		sql = "SELECT * FROM Meal WHERE Day='" + sp.format(date) + "'";
 		Cursor cursor = db.rawQuery(sql, null);
 		if (cursor.moveToFirst()){
 			do{
@@ -94,6 +97,7 @@ public class MealMapper {
 				m.setFood(foodMapper.getFoodById(cursor.getInt(1)));
 				m.setAmount(cursor.getDouble(2));
 				m.setMealtype(mealTypeMapper.getMealTypeById(cursor.getInt(3)));
+				mealsAday.add(m);
 				try {
 					m.setDate(sp.parse(cursor.getString(4)));
 				} catch (ParseException e) {

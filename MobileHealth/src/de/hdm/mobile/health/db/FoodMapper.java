@@ -68,7 +68,7 @@ public class FoodMapper {
 
 
 
-	     sql =  "SELECT * FROM Uebung WHERE Bezeichung LIKE '%" + valueOf + "%'";
+	     sql =  "SELECT * FROM Food WHERE Name LIKE '%" + valueOf + "%'";
 	     Cursor cursor = db.rawQuery(sql, null);
 	     if (cursor.moveToFirst()) {
 	            do {

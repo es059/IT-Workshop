@@ -5,161 +5,203 @@
     android:orientation="vertical" >
 
    
-        <fragment
+        <FrameLayout 
             android:id="@+id/overview_dateTimePicker"
-            android:name="com.example.mobilehealth"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/actionbar_height"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout="@layout/actionbar_datepicker_fragment" />
+            android:layout_height="@dimen/actionbar_height"/>
 	
          <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/overview_dateTimePicker" >
+            android:layout_below="@+id/overview_dateTimePicker"
+            android:layout_gravity="center_horizontal" >
 
             <TableRow
                 android:id="@+id/tableRow1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:gravity="center" >
 
                 <TextView
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="" />
+                    android:text=""
+                     />
                 
                 <TextView
                     android:id="@+id/TVProtein"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Eiweiss" />
+            		android:padding="7dp"
+                    android:text="Eiweiss"
+                    android:background="@drawable/cell_shape" />
                 
                 <TextView
                     android:id="@+id/tvCarbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="KH" />
+                   	android:padding="7dp"
+                    android:text="KH" 
+                    android:background="@drawable/cell_shape"/>
                 
                 <TextView
                     android:id="@+id/tvFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fett" />
+                    android:padding="7dp"
+                    android:text="Fett"
+                    android:background="@drawable/cell_shape" />
                 
                 <TextView
                     android:id="@+id/tvKcal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="kcal" />
+                   	android:padding="7dp"
+                    android:text="kcal"
+                    android:background="@drawable/cell_shape" />
                 
             </TableRow>
 
             <TableRow
                 android:id="@+id/tableRow2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+
                  <TextView
                     android:id="@+id/rowNameIst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ist" />
+                    android:text="Ist"
+                    android:padding="7dp"
+                    android:background="@drawable/cell_shape"
+                     />
                 
                 <TextView
                     android:id="@+id/currenProtein"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
                 
                 <TextView
                     android:id="@+id/currentCarbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
                 
                 <TextView
                     android:id="@+id/currentFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
                 
                 <TextView
                     android:id="@+id/currentKcal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
             </TableRow>
 
             <TableRow
                 android:id="@+id/tableRow3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:gravity="center" >
                 
                   <TextView
                     android:id="@+id/rowNameSoll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="Soll" />
                 
                 <TextView
                     android:id="@+id/targetProtein"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
                 
                 <TextView
                     android:id="@+id/targetCarbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
                 
                 <TextView
                     android:id="@+id/targetFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
                 
                 <TextView
                     android:id="@+id/targetKcal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
             </TableRow>
 
             <TableRow
                 android:id="@+id/tableRow4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:gravity="center" >
                 
                  <TextView
                     android:id="@+id/rowNameRemaining"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="Remaining" />
                 
                 <TextView
                     android:id="@+id/remainingProtein"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
                 
                 <TextView
                     android:id="@+id/remainingCarbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
                 
                 <TextView
                     android:id="@+id/remainingFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
                 
                 <TextView
                     android:id="@+id/remainingKcal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape"
+                    android:padding="7dp"
                     android:text="" />
             </TableRow>
 

@@ -1,14 +1,22 @@
 package de.hdm.mobile.health;
 
+
 import de.hdm.mobile.health.fragment.AddFood;
 import de.hdm.mobile.health.fragment.Disclaimer;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
 
 
 public class HelperActivity extends FragmentActivity  {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		getMenuInflater().inflate(R.menu.log_in, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
 	private static final String PREF_FIRST_LAUNCH = "first";
 	
 	@Override
@@ -18,9 +26,6 @@ public class HelperActivity extends FragmentActivity  {
 		
 		if (!firstTimeCheck()){
 
-			FoodLogFragment d = new FoodLogFragment();
-			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
-			//startActivity(new Intent(this, Disclaimer.class));
 			/**
 			 * Start the LogIn Workflow
 			 * 
@@ -29,13 +34,10 @@ public class HelperActivity extends FragmentActivity  {
 		    FragmentTransaction transaction = getFragmentManager().beginTransaction();
 	        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 	        transaction.replace(R.id.fragment_container, new Disclaimer(), "Disclaimer");
-	        transaction.addToBackStack("Disclaimer");
+	        transaction.addToBackStack(null);
 	        transaction.commit();
 
 		}else{
-
-			FoodLogFragment d = new FoodLogFragment();
-			getSupportFragmentManager().beginTransaction().add(android.R.id.content, d).commit();
 			//startActivity(new Intent(this, AddFood.class));
 		   // finish();
 
@@ -47,10 +49,10 @@ public class HelperActivity extends FragmentActivity  {
 		    FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		    transaction.hide(getFragmentManager().findFragmentById(R.id.LogIn_Bottom));
 	        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-	        transaction.replace(R.id.fragment_container, new AddFood(), "AddFood");
+	        transaction.replace(R.id.fragment_container, new FoodLogFragment(), "FoodLogFragment");
 	        transaction.addToBackStack(null);
 	        transaction.commit();
-
+	        
 		}
 	}
 	/**

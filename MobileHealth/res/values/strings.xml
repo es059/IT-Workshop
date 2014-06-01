@@ -16,5 +16,13 @@
 
     <string name="title_activity_login_advanced">LoginAdvanced</string>
     <string name="title_activity_scanning">Scanning</string>
+    
+    <string-array name="mealtyps">
+        <item>Fruestueck</item>
+        <item>Mittagessen</item>
+        <item>Abendessen</item>
+        <item>Snacks</item>
+        
+    </string-array>
 
 </resources>

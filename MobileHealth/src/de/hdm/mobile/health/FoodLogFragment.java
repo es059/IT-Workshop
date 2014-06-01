@@ -4,16 +4,18 @@ package de.hdm.mobile.health;
 
 import java.util.ArrayList;
 import java.util.Date;
-
 import de.hdm.mobile.health.adapter.MealListAdapter;
 import de.hdm.mobile.health.bo.DailyAim;
 import de.hdm.mobile.health.bo.Meal;
 import de.hdm.mobile.health.bo.Mealtype;
 import de.hdm.mobile.health.db.DailyAimMapper;
 import de.hdm.mobile.health.db.MealMapper;
+import de.hdm.mobile.health.fragment.ActionBarDatePickerFragment;
+import de.hdm.mobile.health.fragment.Disclaimer;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,13 +43,16 @@ private TextView remainingFat;
 private TextView remainingKcal;
 private ListView foodList;
 private DailyAim dailyAim;
-private MealMapper mealMapper = new MealMapper(getActivity());
+private MealMapper mealMapper; 
 private Date currentDay;
+private MealListAdapter adapter; 
 
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+	//
+        mealMapper = new MealMapper(getActivity());
 		View rootView = inflater.inflate(R.layout.activity_food_log, container, false);
 		
 		currentProtein = (TextView) rootView.findViewById(R.id.currenProtein);
@@ -68,53 +73,20 @@ private Date currentDay;
 		foodList = (ListView) rootView.findViewById(R.id.foodList);
 		
 
-		// get DailyAim
-		DailyAimMapper dailyAimMapper =  new DailyAimMapper(getActivity());
-		dailyAim = dailyAimMapper.getDailyAim();
-		
-		// Set DailyAim to its TextViews
-		
-		targetProtein.setText((int)dailyAim.getProtein());
-		targetCarbs.setText((int) dailyAim.getCarbs());
-		targetFat.setText((int) dailyAim.getFat());
-		targetKcal.setText((int) dailyAim.getCalories());
+		insertDailyAim();
 		
 		// get a List of all meals from the current day
 		// TODO anpassung des Dateformates
 		ArrayList<Meal> mealsAday = new ArrayList<Meal>();
 		currentDay = new Date();
 		mealsAday = mealMapper.getMealsAday(currentDay);
-		ArrayList<ListItem> mealList = new ArrayList<>();
 		
-		Mealtype m = new Mealtype();
-		m.setName("Frühstück");
-		mealList.add(m);
 		
-		//Liste der heutigen Nahrungsmittel für Frühstück
-		mealList.addAll(mealMapper.getMealsAday(currentDay, 0));
-		
-		m.setName("Mittagessen");
-		mealList.add(m);
-		
-		//Liste der heutigen Nahrungsmittel für Mittagessen usw
-		mealList.addAll(mealMapper.getMealsAday(currentDay, 1));
-		
-		m.setName("Abendessen");
-		mealList.add(m);
-		
-		//Liste der heutigen Nahrungsmittel für Mittagessen usw
-		mealList.addAll(mealMapper.getMealsAday(currentDay, 2));
-		
-		m.setName("Snacks");
-		mealList.add(m);
-		
-		//Liste der heutigen Nahrungsmittel für Mittagessen usw
-		mealList.addAll(mealMapper.getMealsAday(currentDay, 3));
+		insertListValues();
 		
 		
 		
-		MealListAdapter adapter = new MealListAdapter(getActivity(), mealList);
-		foodList.setAdapter(adapter);
+		
 		
 		
 		// put the accumulated values into the TextViews
@@ -122,32 +94,71 @@ private Date currentDay;
 		insertCurrentValues(mealsAday);
 		
 		
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.replace(R.id.overview_dateTimePicker, new ActionBarDatePickerFragment(), "Disclaimer");
+        transaction.addToBackStack(null);
+        transaction.commit();
+        
+        setHasOptionsMenu(true);
+		
 		return rootView;
+		
+	}
+	private void insertDailyAim() {
+				// get DailyAim
+				DailyAimMapper dailyAimMapper =  new DailyAimMapper(getActivity());
+				dailyAim = dailyAimMapper.getDailyAim();
+				
+				// Set DailyAim to its TextViews
+				//
+				targetProtein.setText(String.valueOf(dailyAim.getProtein()));
+				targetCarbs.setText(String.valueOf(dailyAim.getCarbs()));
+				targetFat.setText(String.valueOf(dailyAim.getFat()));
+				targetKcal.setText(String.valueOf(dailyAim.getCalories()));
 		
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.food_log, menu);
 	}
 	
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		 
+				switch(item.getItemId()){
+				case R.id.menu_add:
+					FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			        transaction.replace(R.id.fragment_container, new FoodSearchFragment() , "FoodSearchFragment");
+			        transaction.addToBackStack(null);
+			        transaction.commit();
+					
+					return true; }
+		return super.onOptionsItemSelected(item);
+	}
 	public void insertCurrentValues(ArrayList<Meal> mealsAday) {
+		
 		double kcalSum = 0;
 		double proteinSum = 0;
 		double fatSum = 0;
 		double carbsSum = 0;
-	
+		if(!mealsAday.isEmpty()) {
 		for(int i = 0; i < mealsAday.size(); i++) {
 			kcalSum += (mealsAday.get(i).getAmount() * mealsAday.get(i).getFood().getCalories())/100;
 			proteinSum += (mealsAday.get(i).getAmount() * mealsAday.get(i).getFood().getProtein())/100;
 			fatSum += (mealsAday.get(i).getAmount() * mealsAday.get(i).getFood().getFat())/100;
 			carbsSum += (mealsAday.get(i).getAmount() * mealsAday.get(i).getFood().getCarbs())/100;
 		}
-		
-		currentKcal.setText((int)kcalSum);
-		currentProtein.setText((int)proteinSum);
-		currentFat.setText((int)fatSum);
-		currentCarbs.setText((int) carbsSum);
+		}
+		currentKcal.setText(String.valueOf(kcalSum));
+		currentProtein.setText(String.valueOf(proteinSum));
+		currentFat.setText(String.valueOf(fatSum));
+		currentCarbs.setText(String.valueOf(carbsSum));
 		
 		double remainingKcal = dailyAim.getCalories() - kcalSum;
 		double remainingProtein = dailyAim.getProtein() - proteinSum;
@@ -162,10 +173,57 @@ private Date currentDay;
 		if(remainingCarbs < 0) this.remainingCarbs.setTextColor(getResources().getColor(R.color.red)); else this.remainingCarbs.setTextColor(getResources().getColor(R.color.green));
 		
 		
-		this.remainingKcal.setText((int) remainingKcal);
-		this.remainingProtein.setText((int) remainingProtein);
-		this.remainingFat.setText((int) remainingFat);
-		this.remainingCarbs.setText((int) remainingCarbs);
+		this.remainingKcal.setText(String.valueOf(remainingKcal));
+		this.remainingProtein.setText(String.valueOf(remainingProtein));
+		this.remainingFat.setText(String.valueOf(remainingFat));
+		this.remainingCarbs.setText(String.valueOf(remainingCarbs));
 		
+	}
+	
+	public void insertListValues() {
+		
+		
+		ArrayList<ListItem> mealList = new ArrayList<ListItem>();
+		
+		Mealtype m = new Mealtype();
+		m.setName("Frühstück");
+		m.setId(0);
+		mealList.add(m);
+		
+		//Liste der heutigen Nahrungsmittel für Frühstück
+		mealList.addAll(mealMapper.getMealsAday(currentDay, 0));
+		
+		m = new Mealtype();
+		m.setName("Mittagessen");
+		m.setId(1);
+		mealList.add(m);
+		
+		//Liste der heutigen Nahrungsmittel für Mittagessen usw
+		mealList.addAll(mealMapper.getMealsAday(currentDay, 1));
+		
+		m = new Mealtype();
+		m.setName("Abendessen");
+		m.setId(2);
+		mealList.add(m);
+		
+		//Liste der heutigen Nahrungsmittel für Mittagessen usw
+		mealList.addAll(mealMapper.getMealsAday(currentDay, 2));
+		
+		m = new Mealtype();
+		m.setName("Snacks");
+		m.setId(3);
+		mealList.add(m);
+		
+		//Liste der heutigen Nahrungsmittel für Mittagessen usw
+		mealList.addAll(mealMapper.getMealsAday(currentDay, 3));
+		
+		adapter = new MealListAdapter(getActivity(), mealList, getActivity());
+		foodList.setAdapter(adapter);
+	}
+	public Date getCurrentDay() {
+		return currentDay;
+	}
+	public void setCurrentDay(Date currentDay) {
+		this.currentDay = currentDay;
 	}
 }

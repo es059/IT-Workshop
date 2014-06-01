@@ -6,14 +6,13 @@
     tools:context="com.example.mobilehealth.FoodSearch"
     tools:ignore="MergeRootFrame" >
     
-      <fragment
+      <FrameLayout
 		        android:id="@+id/add_searchBar"
-		        android:name="com.example.mobilehealth.ActionBarSearchBarFragment"
 		        android:layout_width="match_parent"
 		        android:layout_height="@dimen/actionbar_height"
 		        android:layout_alignParentTop="true"
 		        android:layout_centerHorizontal="true"
-		        tools:layout="@layout/actionbar_searchbar_fragment"/>
+		       />
 		
 		
 		    <ListView

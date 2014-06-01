@@ -2,12 +2,17 @@ package de.hdm.mobile.health.fragment;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
+import de.hdm.mobile.health.FoodLogFragment;
 import de.hdm.mobile.health.R;
 import de.hdm.mobile.health.R.id;
 import de.hdm.mobile.health.R.layout;
+import de.hdm.mobile.health.bo.Meal;
+import de.hdm.mobile.health.db.MealMapper;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +31,8 @@ public class ActionBarDatePickerFragment extends Fragment implements OnClickList
 	SimpleDateFormat dateFormat;
 	Calendar calendar;
 	String formatedDate;
+	private FoodLogFragment foodLogFragment;
+	private MealMapper mealMapper;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -44,6 +51,10 @@ public class ActionBarDatePickerFragment extends Fragment implements OnClickList
 		
 		next.setOnClickListener(this);
 		previous.setOnClickListener(this);
+		
+		foodLogFragment = (FoodLogFragment) getActivity().getFragmentManager().findFragmentByTag("FoodLogFragment");
+		
+		mealMapper = new MealMapper(getActivity());
 		return view;
 		
 	}
@@ -55,10 +66,12 @@ public class ActionBarDatePickerFragment extends Fragment implements OnClickList
 		case R.id.Next:
 			calendar.add(Calendar.DATE, +1);
 			getDate();
+			updateFoodLogFragment();
 			break;
 		case R.id.Previous:
 			calendar.add(Calendar.DATE, -1);
 			getDate();
+			updateFoodLogFragment();
 			break;
 		default:
 			break;
@@ -73,5 +86,14 @@ public class ActionBarDatePickerFragment extends Fragment implements OnClickList
 			formatedDate = dateFormat.format(calendar.getTime());
 			date.setText(formatedDate);
 		}
+	}
+	
+	public void updateFoodLogFragment() {
+		ArrayList<Meal> mealsAday = new ArrayList<Meal>();
+		Date date = calendar.getTime();
+		mealsAday = mealMapper.getMealsAday(date);
+		foodLogFragment.insertCurrentValues(mealsAday);
+		foodLogFragment.setCurrentDay(date);
+		foodLogFragment.insertListValues();
 	}
 }

@@ -36,6 +36,13 @@ public class AddFood extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.add_food, container, false);
+	    
+		fat = (EditText)view.findViewById(R.id.scan_fat);
+		protein = (EditText)view.findViewById(R.id.scan_protein);
+		carb = (EditText)view.findViewById(R.id.scan_carb);
+		cal = (EditText)view.findViewById(R.id.scan_kalc);
+		name = (EditText)view.findViewById(R.id.scan_name);
+	    
 	    setHasOptionsMenu(true); 
 		return view;	
 	}
@@ -127,13 +134,7 @@ public class AddFood extends Fragment{
 		private String fatString, proteinString, carbString, calString, nameString;
 		private ProgressDialog mDialog;
 		
-		public BackGroundTask (AddFood activity){
-			fat = (EditText)getActivity().findViewById(R.id.scan_fat);
-			protein = (EditText)getActivity().findViewById(R.id.scan_protein);
-			carb = (EditText)getActivity().findViewById(R.id.scan_carb);
-			cal = (EditText)getActivity().findViewById(R.id.scan_kalc);
-			name = (EditText)getActivity().findViewById(R.id.scan_name);
-			
+		public BackGroundTask (AddFood activity){			
 		    mDialog = new ProgressDialog(AddFood.this.getActivity());
 		    mDialog.setProgressStyle(ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT);
 		    mDialog.setMessage("Lade Information");

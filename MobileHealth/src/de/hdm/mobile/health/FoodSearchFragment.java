@@ -2,9 +2,14 @@ package de.hdm.mobile.health;
 
 import java.util.ArrayList;
 
+
+
+
+
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -20,28 +25,32 @@ import de.hdm.mobile.health.adapter.FoodListAdapter;
 import de.hdm.mobile.health.bo.Food;
 import de.hdm.mobile.health.bo.Mealtype;
 import de.hdm.mobile.health.db.FoodMapper;
+import de.hdm.mobile.health.fragment.ActionBarDatePickerFragment;
+import de.hdm.mobile.health.fragment.ActionBarSearchBarFragment;
 
 public class FoodSearchFragment extends Fragment implements OnItemClickListener {
-	
-	private EditText search;
 	private ListView foodListView; 
 	private FoodListAdapter foodAdapter;
 	private ArrayList<Food> foodList;
 	private FoodMapper foodMapper;
 	private Mealtype mealtype;
+	private int mealtype_Id;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		View rootView = inflater.inflate(R.layout.activity_food_search, container, false);
+		foodMapper = new FoodMapper(getActivity());
 		foodList  = new ArrayList<Food>();
 		foodList = foodMapper.getAll();
-		search = (EditText) rootView.findViewById(R.id.foodSearch_subject);
 		foodListView = (ListView) rootView.findViewById(R.id.add_foodList);
-		foodAdapter = new FoodListAdapter(getActivity(), R.layout.listview_food, foodList);
-		foodListView.setAdapter(foodAdapter);
+		// set ListAdapter
+		setListAdapter(foodList);
+		foodListView.setOnItemClickListener(this);
+		//mealtype_Id = (int) getArguments().get("mealtype_Id");
 		
-		search.addTextChangedListener(new TextWatcher() 
+	/*	search.addTextChangedListener(new TextWatcher() 
 		  {
 	          
 	          public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -64,11 +73,24 @@ public class FoodSearchFragment extends Fragment implements OnItemClickListener 
 	        	  foodListView.invalidateViews();
 	        	  System.out.println(s);
 	          }
-	  });
+	  }); */
+		
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.replace(R.id.add_searchBar, new ActionBarSearchBarFragment(), "Disclaimer");
+        transaction.addToBackStack(null);
+        transaction.commit();
 		
 		return rootView;
 	}
 	
+	public void setListAdapter(ArrayList<Food> list) {
+		
+		foodAdapter = new FoodListAdapter(getActivity(), R.layout.listview_food, list);
+		foodListView.setAdapter(foodAdapter);
+		
+	}
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub
@@ -79,7 +101,7 @@ public class FoodSearchFragment extends Fragment implements OnItemClickListener 
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Food food = new Food();
 		food = (Food) foodListView.getItemAtPosition(arg2);
-		DialogFragment dialogFragment = FoodClickDialogFragment.newInstance(getActivity(), food, mealtype);
+		DialogFragment dialogFragment = FoodClickDialogFragment.newInstance(getActivity(), food, mealtype_Id);
 		dialogFragment.show(this.getFragmentManager(), "Open Exercise Settings on Long Click");
 		
 	}
