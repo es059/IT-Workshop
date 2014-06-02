@@ -29,10 +29,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddFood extends Fragment{
-	
-	public String barcode;
-	private EditText fat, protein, carb, cal, name;
-	
+
+	public String barcodeString = "";
+	private EditText fat, protein, carb, cal, name, barcode;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.add_food, container, false);
@@ -42,17 +42,18 @@ public class AddFood extends Fragment{
 		carb = (EditText)view.findViewById(R.id.scan_carb);
 		cal = (EditText)view.findViewById(R.id.scan_kalc);
 		name = (EditText)view.findViewById(R.id.scan_name);
-	    
+		barcode = (EditText)view.findViewById(R.id.scan_barcode);
+		
 	    setHasOptionsMenu(true); 
 		return view;	
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.add_food, menu);
 	}
-	
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -86,11 +87,16 @@ public class AddFood extends Fragment{
 		// TODO Auto-generated method stub
 		Food food = new Food();
 		if (name.getText().toString() != ""){	
-			food.setBarcode(barcode);
+			food.setBarcode(barcodeString);
+			if(cal.getText().toString().length() != 0)
 			food.setCalories(Double.parseDouble(cal.getText().toString()));
+			if(carb.getText().toString().length() != 0)
 			food.setCarbs(Double.parseDouble(carb.getText().toString()));
+			if(fat.getText().toString().length() != 0)
 			food.setFat(Double.parseDouble(fat.getText().toString()));
+			if(name.getText().toString().length() != 0)
 			food.setName(name.getText().toString());
+			if(protein.getText().toString().length() != 0)
 			food.setProtein(Double.parseDouble(protein.getText().toString()));
 			FoodMapper fMapper = new FoodMapper(getActivity());
 			fMapper.add(food);
@@ -112,9 +118,10 @@ public class AddFood extends Fragment{
 			 * attributes for the new grocery 
 			 * 
 			 */
-			barcode = scanningResult.getContents();
-		    if(barcode != null){
-				new BackGroundTask(AddFood.this).execute(barcode);
+			barcodeString = scanningResult.getContents();
+		    if(barcodeString != null){
+				new BackGroundTask(AddFood.this).execute(barcodeString);
+				barcode.setText(barcodeString);
 		    }else{
 			    Toast toast = Toast.makeText(getActivity(), "Barcode scanner wurde beendet", Toast.LENGTH_SHORT);
 			    toast.show();
@@ -124,7 +131,7 @@ public class AddFood extends Fragment{
 		    toast.show();
 		}
 	}
-	
+
 	/**
 	 * Handels the HTML parsing in an Async Task
 	 * 
@@ -133,15 +140,15 @@ public class AddFood extends Fragment{
 	public class BackGroundTask extends AsyncTask<String, Void, Void> {
 		private String fatString, proteinString, carbString, calString, nameString;
 		private ProgressDialog mDialog;
-		
-		public BackGroundTask (AddFood activity){			
+
+		public BackGroundTask (AddFood activity){
 		    mDialog = new ProgressDialog(AddFood.this.getActivity());
 		    mDialog.setProgressStyle(ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT);
 		    mDialog.setMessage("Lade Information");
 		    mDialog.setCancelable(false);
 		    mDialog.setCanceledOnTouchOutside(false);
 		}
-		
+
 	    @Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
@@ -197,17 +204,17 @@ public class AddFood extends Fragment{
 	    @Override
 	    protected void onPostExecute(Void result) {
 	        super.onPostExecute(result);
-	        
+
 	        cal.setText(calString);
 	        protein.setText(proteinString);
 	        carb.setText(carbString);
 	        fat.setText(fatString);
 	        name.setText(nameString);
-	        
+
 	        if (mDialog.isShowing()) {
 	        	mDialog.dismiss();
 	        }
-	       
+
 	    }
 
 	}

@@ -26,6 +26,7 @@
         android:layout_below="@+id/divider_general"
         android:layout_marginTop="27dp"
         android:ems="10"
+        android:singleLine="true"
         android:hint="Name" >
 
     </EditText>
@@ -106,6 +107,22 @@
         android:layout_alignLeft="@+id/textView_general"
         android:text="Eiweiß:" />
 
+    <EditText
+        android:id="@+id/scan_barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scan_protein"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="Barcode" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/scan_barcode"
+        android:layout_alignBottom="@+id/scan_barcode"
+        android:layout_alignLeft="@+id/textView_general"
+        android:text="Barcode:" />
 
 </RelativeLayout>
 

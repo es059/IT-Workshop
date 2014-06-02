@@ -1,6 +1,8 @@
 package de.hdm.mobile.health.fragment;
 
 import de.hdm.mobile.health.R;
+import de.hdm.mobile.health.bo.User;
+import de.hdm.mobile.health.db.UserMapper;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -10,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import android.widget.Toast;
 /**
  * This class handles the behavior of the 'Next Arrow' Button 
@@ -22,6 +23,14 @@ public class BottomLogIn extends Fragment implements OnClickListener{
 	private Activity currentActivity = null;
 	private Button next = null;
 	private Button previous = null;
+	private static User n = null;
+	/**
+	 * Initialize the Fragments
+	 */
+	LogIn l = new LogIn();
+	LogInAdvanced la = new LogInAdvanced();
+	Disclaimer d = new Disclaimer();
+	
 	
 	/**
 	 * Sets the Layout of the Fragment and references the direction Buttons to 
@@ -68,29 +77,34 @@ public class BottomLogIn extends Fragment implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 	    FragmentTransaction transaction = currentActivity.getFragmentManager().beginTransaction();
-        	
 		switch(v.getId()){
 			case R.id.bottom_next:
 				if( currentActivity.getFragmentManager().findFragmentByTag("Disclaimer").isVisible()){
-					transaction.replace(R.id.fragment_container, new LogIn(), "LogIn");
+					transaction.replace(R.id.fragment_container, l, "LogIn");
 				} else if (currentActivity.getFragmentManager().findFragmentByTag("LogIn").isVisible()){
-					transaction.replace(R.id.fragment_container, new LoginAdvanced(), "LogInAdvanced");
+					n = ((LogIn) currentActivity.getFragmentManager().findFragmentByTag("LogIn")).getUserInformation();
+					transaction.replace(R.id.fragment_container, la, "LogInAdvanced");
 				} else{
+					n = ((LogInAdvanced)currentActivity.getFragmentManager().findFragmentByTag("LogInAdvanced")).getUserInformation(n);
+					UserMapper uMapper = new UserMapper(getActivity());
+					uMapper.add(n);
 					transaction.replace(R.id.fragment_container, new AddFood(), "AddFood");
+					Toast.makeText(getActivity(), "Account wurde angelegt: Willkommen " + n.getSurename() + " " + n.getLastName()
+							, Toast.LENGTH_SHORT).show();
 					/**
 					 * Hide the Bottom Fragment and inform the user that a new Account was created
 					 */
 					transaction.remove(currentActivity.getFragmentManager().findFragmentById(R.id.LogIn_Bottom));
-					Toast.makeText(getActivity(), "Account wurde angelegt", Toast.LENGTH_SHORT).show();
 				}	
 				break;
 			case R.id.bottom_previous:
 				if(currentActivity.getFragmentManager().findFragmentByTag("Disclaimer").isVisible()){
 					
 				} else if (currentActivity.getFragmentManager().findFragmentByTag("LogIn").isVisible()){
-					transaction.replace(R.id.fragment_container, new Disclaimer(), "Disclaimer");
+					transaction.replace(R.id.fragment_container, d, "Disclaimer");
 				} else{
-					transaction.replace(R.id.fragment_container, new LogIn(), "LogIn");
+
+					transaction.replace(R.id.fragment_container, l, "LogIn");
 				}
 				break;
 		}
