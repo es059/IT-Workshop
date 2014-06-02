@@ -50,4 +50,13 @@ public class DailyAimMapper {
 		db.close();
 		return dailyAim;
 	}
+	
+	public void setDailyAim(DailyAim da) {
+		SQLiteDatabase db = myDBHelper.getWritableDatabase();
+		sql = "INSERT OR REPLACE INTO DailyAim (Calories, Proteine, Fat, Carbs) VALUES ("+ da.getCalories()+ "," + da.getProtein() +","+ da.getFat()+ ", "+ da.getCarbs() +")";
+		db.execSQL(sql);
+		db.close();
+		
+		
+	}
 }

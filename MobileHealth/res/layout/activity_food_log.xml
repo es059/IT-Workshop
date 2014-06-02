@@ -8,7 +8,8 @@
         <FrameLayout 
             android:id="@+id/overview_dateTimePicker"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/actionbar_height"/>
+            android:layout_height="@dimen/actionbar_height"
+            android:background="@drawable/actionbar_green"/>
 	
          <TableLayout
             android:layout_width="match_parent"
