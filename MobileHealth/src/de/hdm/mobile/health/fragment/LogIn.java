@@ -3,6 +3,7 @@ package de.hdm.mobile.health.fragment;
 import de.hdm.mobile.health.R;
 import de.hdm.mobile.health.bo.User;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,19 +27,18 @@ public class LogIn extends Fragment{
 	private EditText mWeight;
 	private EditText mAge;
 	private View view;
+	private BottomLogIn bottomLogIn;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 	    view = inflater.inflate(R.layout.fragment_login,container, false);
 	    
-		/**
-		 * Reversing the invisibility done in the <code>Disclaimer</code> Fragment
-		 *
-	     * @author Eric Schmidt
-	     */
-		Button previous = (Button) getActivity().findViewById(R.id.bottom_previous);
-		previous.setVisibility(View.VISIBLE);
+	    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.replace(R.id.LogIn_Container, new BottomLogIn(), "BottomLogIn");
+        transaction.addToBackStack(null);
+        transaction.commit();
 	    
 		/**
 		 * Reference the EditText-Fields
@@ -50,6 +50,11 @@ public class LogIn extends Fragment{
 		mWeight = (EditText) view.findViewById(R.id.Weight);
 		
 	    return view;
+	}
+	
+	public void onResume() {
+		super.onResume();
+		bottomLogIn = (BottomLogIn) getActivity().getFragmentManager().findFragmentByTag("BottomLogIn");
 	}
 	
 	@Override
@@ -79,13 +84,13 @@ public class LogIn extends Fragment{
 		User n = new User();
 		n.setSurename(mSurename.getText().toString());
 		n.setLastName(mLastName.getText().toString());
-		if (mWeight.getText().toString() == ""){
+		if (mWeight.getText().toString() != ""){
 			n.setWeight(Double.parseDouble(mWeight.getText().toString()));
 		}
-		if (mHeight.getText().toString() == ""){
+		if (mHeight.getText().toString() != ""){
 			n.setHeight(Double.parseDouble(mHeight.getText().toString()));
 		}
-		if (mAge.getText().toString() == ""){
+		if (mAge.getText().toString() != ""){
 			n.setAge(Double.parseDouble(mAge.getText().toString()));
 		}
 		return n;

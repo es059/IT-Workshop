@@ -30,8 +30,9 @@
     </style>
     <!-- Devider theme -->
    	<style name="DividerLogin" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">3dp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_gravity">center</item>
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:layout_marginBottom">10dp</item>
         <!-- Optional @android:color/darker_gray -->

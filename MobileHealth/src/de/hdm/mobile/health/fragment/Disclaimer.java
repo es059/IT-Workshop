@@ -1,11 +1,13 @@
 package de.hdm.mobile.health.fragment;
 
+import de.hdm.mobile.health.FoodLogFragment;
 import de.hdm.mobile.health.R;
 import de.hdm.mobile.health.R.id;
 import de.hdm.mobile.health.R.layout;
 import de.hdm.mobile.health.R.menu;
 import de.hdm.mobile.health.R.string;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -17,23 +19,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-
+/**
+ * Klasse, welche den Disclaimer beim ersten Start der App darstellt.
+ * @author remi
+ *
+ */
 public class Disclaimer extends Fragment{
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.fragment_disclaimer,
 	            container, false);
 	    
-	    /**
-	     * Set the Visibility of the previous button to invisible since there is no previous fragment
-	     * 
-	     * @author Eric Schmidt
-	     */
-		Button previous = (Button) getActivity().findViewById(R.id.bottom_previous);
-		previous.setVisibility(View.INVISIBLE);
-		
+	    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.replace(R.id.LogIn_Container, new BottomLogIn(), "BottomLogIn");
+        transaction.addToBackStack(null);
+        transaction.commit();
+       
 	    return view;
 	}
+	
+	
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -50,6 +57,17 @@ public class Disclaimer extends Fragment{
 		disclaimer.setText(R.string.disclaimer);
 		disclaimer.setTextSize(10);
 		disclaimer.setMovementMethod(new ScrollingMovementMethod());
+		
+		BottomLogIn bottomLogIn = (BottomLogIn) getActivity().getFragmentManager().findFragmentByTag("BottomLogIn");
+		    
+		    /**
+		     * Set the Visibility of the previous button to invisible since there is no previous fragment
+		     * 
+		     * @author Eric Schmidt
+		     */
+	        
+	       
+	    bottomLogIn.getPrevious().setVisibility(View.INVISIBLE);
 	}
 
 	@Override

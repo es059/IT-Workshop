@@ -2,6 +2,9 @@ package de.hdm.mobile.health.bo;
 
 import de.hdm.mobile.health.ListItem;
 
+/**
+ * Ein Objekt dieser Klasse repräsentiert eine Mahlzeitart.
+ */
 public class Mealtype implements ListItem {
 	
 	private int id;

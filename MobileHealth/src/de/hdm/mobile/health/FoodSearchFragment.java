@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 
 
+
+
+
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -15,6 +18,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,7 +31,14 @@ import de.hdm.mobile.health.bo.Mealtype;
 import de.hdm.mobile.health.db.FoodMapper;
 import de.hdm.mobile.health.fragment.ActionBarDatePickerFragment;
 import de.hdm.mobile.health.fragment.ActionBarSearchBarFragment;
+import de.hdm.mobile.health.fragment.AddFood;
 
+
+/**
+ * Mit Hilfe dieser Klasse kann der User nach Nahrungsmittel suchen und seinem Tagebuch Nahrungsmittel hinzufügen. 
+ * @author remi
+ *
+ */
 public class FoodSearchFragment extends Fragment implements OnItemClickListener {
 	private ListView foodListView; 
 	private FoodListAdapter foodAdapter;
@@ -48,32 +59,8 @@ public class FoodSearchFragment extends Fragment implements OnItemClickListener 
 		// set ListAdapter
 		setListAdapter(foodList);
 		foodListView.setOnItemClickListener(this);
-		//mealtype_Id = (int) getArguments().get("mealtype_Id");
-		
-	/*	search.addTextChangedListener(new TextWatcher() 
-		  {
-	          
-	          public void beforeTextChanged(CharSequence s, int start, int count, int after)
-	          {
-	                    
-	          }
-	 
-	          public void onTextChanged(CharSequence s, int start, int before, int count)
-	          {
-	        	 
-	          }
-
-	          public void afterTextChanged(Editable s)
-	          {
-	              
-	        	  foodAdapter.clear();
-	        	  foodList = foodMapper.searchKeyString(String.valueOf(s));
-	        	  foodAdapter.addAll(foodList);
-	        	  foodAdapter.notifyDataSetChanged();
-	        	  foodListView.invalidateViews();
-	        	  System.out.println(s);
-	          }
-	  }); */
+		this.setHasOptionsMenu(true);
+	
 		
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -93,10 +80,28 @@ public class FoodSearchFragment extends Fragment implements OnItemClickListener 
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
+		inflater.inflate(R.menu.food_search, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
-
+/**
+ * Über das +-Item im Menü kann ein neues Nahrungsmittel hinzugefügt werden. Dafür öffnet sich ein neues Fragment. 
+ */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case R.id.add:
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+	        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+	        transaction.replace(R.id.fragment_container, new AddFood() , "AddFood");
+	        transaction.addToBackStack(null);
+	        transaction.commit();
+			
+			return true; }
+		return super.onOptionsItemSelected(item);
+	}
+	/**
+	 * Beim Klick auf ein Nahrungsmittel öffnet sich das DialogFragment zum Hinzufügen des Nahrungsmittel dem Tagebuch.
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Food food = new Food();

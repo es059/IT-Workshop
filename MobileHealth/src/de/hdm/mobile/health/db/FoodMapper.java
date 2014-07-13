@@ -12,6 +12,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Mapper Klasse welche Nahrungsmittel aus der Datenbank auslesen und einpflegen kann. 
+ * @author remi
+ *
+ */
 public class FoodMapper {
 	
 	private DataBaseHelper myDBHelper;
@@ -61,13 +66,14 @@ public class FoodMapper {
 		db.close();
 	}
 
+	/**
+	 * Methode welche ein Nahrungsmittel sucht anhand von einer eingegebenen Zeichenkette.
+	 * 
+	 * @return - gibt eine ArrayList mit Nahrungsmittel zurück welche die übergebene Zeichenkette beinhalten.
+	 */
 	public ArrayList<Food> searchKeyString(String valueOf) {
 		SQLiteDatabase db = myDBHelper.getWritableDatabase();
 	    ArrayList<Food> foodList = new ArrayList<Food>();
-	 
-
-
-
 	     sql =  "SELECT * FROM Food WHERE Name LIKE '%" + valueOf + "%'";
 	     Cursor cursor = db.rawQuery(sql, null);
 	     if (cursor.moveToFirst()) {
@@ -91,25 +97,30 @@ public class FoodMapper {
 
 	    return foodList;
 	}
-	
+	/**
+	 * Methode welche ein Nahrungsmittel anhand seiner eindeutigen ID aus der Datenbank ausliest.
+	 */
 	public Food getFoodById(int Id) {
-		  	Food food = new Food();
-		    SQLiteDatabase db = this.myDBHelper.getReadableDatabase();
-		    sql = "SELECT * FROM Food WHERE Food_Id = " + Id;
-		    Cursor cursor = db.rawQuery(sql, null);
-		    if (cursor.moveToFirst()){
-			   food.setBarcode(cursor.getString(0));
-			   food.setName(cursor.getString(2));
-			   food.setKilojoule(cursor.getDouble(3));
-			   food.setCalories(cursor.getDouble(4));
-			   food.setProtein(cursor.getDouble(5));
-			   food.setCarbs(cursor.getDouble(6));
-			   food.setFat(cursor.getDouble(7));
-		    }
-		    db.close();
-		    return food;
-	}
-
+	  	Food food = new Food();
+	    SQLiteDatabase db = this.myDBHelper.getReadableDatabase();
+	    sql = "SELECT * FROM Food WHERE Food_Id = " + Id;
+	    Cursor cursor = db.rawQuery(sql, null);
+	    if (cursor.moveToFirst()){
+		   food.setBarcode(cursor.getString(0));
+		   food.setName(cursor.getString(2));
+		   food.setKilojoule(cursor.getDouble(3));
+		   food.setCalories(cursor.getDouble(4));
+		   food.setProtein(cursor.getDouble(5));
+		   food.setCarbs(cursor.getDouble(6));
+		   food.setFat(cursor.getDouble(7));
+	    }
+	    db.close();
+	    return food;
+}
+/**
+ * Methode welche alle Nahrungsmittel aus der Datenbank ausliest und als ArrayList zurück gibt. 
+ * @return
+ */
 	public ArrayList<Food> getAll() {
 		ArrayList<Food> foodList = new ArrayList<Food>();
 		SQLiteDatabase db = myDBHelper.getWritableDatabase();

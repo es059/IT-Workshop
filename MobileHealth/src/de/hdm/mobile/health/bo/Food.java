@@ -1,5 +1,8 @@
 package de.hdm.mobile.health.bo;
 
+/**
+ * Objekte dieser Klasse repräsentieren ein Nahrungsmittel. 
+ */
 public class Food {
 	private String mName;
 	private int mId;

@@ -15,7 +15,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-
+/**
+ * Mapper-Klasse welche Mahlzeiten aus der Datenbank auslesen und in die DB einpflegen kann.
+ */
 public class MealMapper {
 	private DataBaseHelper myDBHelper;
 	private String sql;
@@ -43,7 +45,9 @@ public class MealMapper {
 	 	
 	}
 	
-	
+	/**
+	 * Methode welche Mahlzeiten eines bestimmten Tages mit einer bestimmten Mahlzeitart ausliest und zurück gibt.
+	 */
 	public ArrayList<Meal> getMealsAday(Date date, int mealtype_Id) {
 		ArrayList<Meal> mealsAday = new ArrayList<Meal>();
 		
@@ -54,6 +58,7 @@ public class MealMapper {
 		if (cursor.moveToFirst()){
 			do{
 				Meal m = new Meal();
+				m.setiD(cursor.getInt(0));
 				m.setFood(foodMapper.getFoodById(cursor.getInt(1)));
 				m.setAmount(cursor.getDouble(2));
 				m.setMealtype(mealTypeMapper.getMealTypeById(cursor.getInt(3)));
@@ -70,20 +75,39 @@ public class MealMapper {
 		return mealsAday;
 	}
 
+/**
+ * Methode zum Hinzufügen einer Mahlzeit
 
+ */
 	public void addMeal(Meal m, int mt_Id) {
+		int id = 1;
 		SQLiteDatabase db = myDBHelper.getWritableDatabase();
 		SimpleDateFormat sp = new SimpleDateFormat("dd.MM.yyyy");
 		String date = sp.format(m.getDate());
-			
-		sql = "INSERT INTO Meal (Food_Id, Amount, Mealtyp_Id, Day)"
-				+ " VALUES ('" + m.getFood().getId() + "', " + m.getAmount()
+		if (m.getiD() == 0){
+			sql = "SELECT MAX(Meal_Id) FROM Meal";
+			Cursor cursor = db.rawQuery(sql, null);
+			if (cursor.moveToFirst()){
+				if (!cursor.isNull(0)){
+					id = Integer.parseInt(cursor.getString(0));
+					id++;
+				}
+			}
+			cursor.close();
+		}else{
+			id = m.getiD();
+		}
+		sql = "INSERT OR REPLACE INTO Meal (Meal_Id, Food_Id, Amount, Mealtyp_Id, Day)"
+				+ " VALUES ('" + m.getiD() + "', '" + m.getFood().getId() + "', " + m.getAmount()
 				+ ", '" + mt_Id + "',  '" + date + "')";
 		db.execSQL(sql);
 		db.close();
 		
 	}
 
+	/**
+	 * Methode welche Mahlzeiten eines bestimmten Tages ausliest und zurück gibt.
+	 */
 	public ArrayList<Meal> getMealsAday(Date date) {
 		ArrayList<Meal> mealsAday = new ArrayList<Meal>();
 		
@@ -94,6 +118,7 @@ public class MealMapper {
 		if (cursor.moveToFirst()){
 			do{
 				Meal m = new Meal();
+				m.setiD(cursor.getInt(0));
 				m.setFood(foodMapper.getFoodById(cursor.getInt(1)));
 				m.setAmount(cursor.getDouble(2));
 				m.setMealtype(mealTypeMapper.getMealTypeById(cursor.getInt(3)));
@@ -108,6 +133,13 @@ public class MealMapper {
 		}
 		db.close();
 		return mealsAday;
+	}
+
+	public void deleteMeal(Meal meal) {
+		SQLiteDatabase db = this.myDBHelper.getReadableDatabase();
+		sql = "DELETE FROM Meal WHERE Meal_Id =" + meal.getiD();
+		db.execSQL(sql);
+		
 	}
 	
 }

@@ -6,6 +6,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_disclaimer">Haftungsausschluss</string>
+     <string name="add">add</string>
+       <string name="save">save</string>
 
     <string-array name="activity_level">
         <item>Gering</item>

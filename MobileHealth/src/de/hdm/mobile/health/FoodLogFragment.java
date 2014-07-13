@@ -4,6 +4,7 @@ package de.hdm.mobile.health;
 
 import java.util.ArrayList;
 import java.util.Date;
+
 import de.hdm.mobile.health.adapter.MealListAdapter;
 import de.hdm.mobile.health.bo.DailyAim;
 import de.hdm.mobile.health.bo.Meal;
@@ -14,6 +15,7 @@ import de.hdm.mobile.health.fragment.ActionBarDatePickerFragment;
 import de.hdm.mobile.health.fragment.Disclaimer;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -23,11 +25,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.os.Build;
 
-public class FoodLogFragment extends Fragment {
+/**
+ * Diese Klasse stellt das Ernährungstagebuch dar. Es besteht aus einer Tabelle welche SOll, Ist und Verbleibende Werte anzeigt 
+ * und aus einer Liste welche alle Nahrungsmittel anzeigt die an diesem Tag konsumiert wurden.
+ * @author remi
+ *
+ */
+public class FoodLogFragment extends Fragment implements OnItemClickListener {
 
 private TextView currentProtein;
 private TextView currentCarbs;
@@ -54,7 +64,9 @@ private MealListAdapter adapter;
 	//
         mealMapper = new MealMapper(getActivity());
 		View rootView = inflater.inflate(R.layout.activity_food_log, container, false);
-		
+		/**
+		 * Initisaliserung aller GUI-ELemente
+		 */
 		currentProtein = (TextView) rootView.findViewById(R.id.currenProtein);
 		currentCarbs = (TextView) rootView.findViewById(R.id.currentCarbs);
 		currentFat = (TextView) rootView.findViewById(R.id.currentFat);
@@ -71,12 +83,12 @@ private MealListAdapter adapter;
 		remainingKcal = (TextView) rootView.findViewById(R.id.remainingKcal);
 		
 		foodList = (ListView) rootView.findViewById(R.id.foodList);
+		foodList.setOnItemClickListener(this);
 		
 
 		insertDailyAim();
 		
 		// get a List of all meals from the current day
-		// TODO anpassung des Dateformates
 		ArrayList<Meal> mealsAday = new ArrayList<Meal>();
 		currentDay = new Date();
 		mealsAday = mealMapper.getMealsAday(currentDay);
@@ -85,6 +97,36 @@ private MealListAdapter adapter;
 		insertListValues();
 		
 		
+		double kcalSum = 0;
+		double proteinSum = 0;
+		double fatSum = 0;
+		double carbsSum = 0;
+		
+		currentKcal.setText("0");
+		currentProtein.setText("0");
+		currentFat.setText("0");
+		currentCarbs.setText("0");
+		/**
+		 * Vrtbleibende Werte werden berechnet.
+		 */
+		double remainingKcal = Math.round(dailyAim.getCalories() - kcalSum);
+		double remainingProtein = Math.round(dailyAim.getProtein() - proteinSum);
+		double remainingFat = Math.round(dailyAim.getFat() - fatSum);
+		double remainingCarbs = Math.round(dailyAim.getCarbs() - carbsSum);
+		/**
+		 * Farbe der Schrift wird bestimmt. negativer Wert  = rote Schrift ; positiver Wert = grüne Schrift
+		 */
+		if(remainingKcal < 0) this.remainingKcal.setTextColor(getResources().getColor(R.color.red)); else this.remainingKcal.setTextColor(getResources().getColor(R.color.green));
+		if(remainingProtein < 0) this.remainingProtein.setTextColor(getResources().getColor(R.color.red)); else this.remainingProtein.setTextColor(getResources().getColor(R.color.green));
+		if(remainingFat < 0) this.remainingFat.setTextColor(getResources().getColor(R.color.red)); else this.remainingFat.setTextColor(getResources().getColor(R.color.green));
+		if(remainingCarbs < 0) this.remainingCarbs.setTextColor(getResources().getColor(R.color.red)); else this.remainingCarbs.setTextColor(getResources().getColor(R.color.green));
+		/**
+		 * Werte werden den Labels zugewiesen
+		 */
+		this.remainingKcal.setText(String.valueOf(Math.round(remainingKcal)));
+		this.remainingProtein.setText(String.valueOf(Math.round(remainingProtein)));
+		this.remainingFat.setText(String.valueOf(Math.round(remainingFat)));
+		this.remainingCarbs.setText(String.valueOf(Math.round(remainingCarbs)));
 		
 		
 		
@@ -93,10 +135,12 @@ private MealListAdapter adapter;
 		if(!mealsAday.isEmpty()) 
 		insertCurrentValues(mealsAday);
 		
-		
+		/**
+		 * Anzeige des Fragments zur Navigation der Tage
+		 */
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        transaction.replace(R.id.overview_dateTimePicker, new ActionBarDatePickerFragment(), "Disclaimer");
+        transaction.replace(R.id.overview_dateTimePicker, new ActionBarDatePickerFragment(), "ActionBarDatePicker");
         transaction.addToBackStack(null);
         transaction.commit();
         
@@ -105,6 +149,9 @@ private MealListAdapter adapter;
 		return rootView;
 		
 	}
+	/**
+	 * Methode welche das tägliche Nährwertziel aus der Datenbank list und in die Tabelle einträgt. 
+	 */
 	private void insertDailyAim() {
 				// get DailyAim
 				DailyAimMapper dailyAimMapper =  new DailyAimMapper(getActivity());
@@ -112,15 +159,14 @@ private MealListAdapter adapter;
 				
 				// Set DailyAim to its TextViews
 				//
-				targetProtein.setText(String.valueOf(dailyAim.getProtein()));
-				targetCarbs.setText(String.valueOf(dailyAim.getCarbs()));
-				targetFat.setText(String.valueOf(dailyAim.getFat()));
-				targetKcal.setText(String.valueOf(dailyAim.getCalories()));
+				targetProtein.setText(String.valueOf(Math.round(dailyAim.getProtein())));
+				targetCarbs.setText(String.valueOf(Math.round(dailyAim.getCarbs())));
+				targetFat.setText(String.valueOf(Math.round(dailyAim.getFat())));
+				targetKcal.setText(String.valueOf(Math.round(dailyAim.getCalories())));
 		
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.food_log, menu);
 	}
@@ -141,6 +187,11 @@ private MealListAdapter adapter;
 					return true; }
 		return super.onOptionsItemSelected(item);
 	}
+	
+	/**
+	 * Methode welche alle Ist Werte in die Tabelle einträgt und daraufhin die Werte in der Zeile "Verbleibend" berechnet und einträgt. 
+	 * @param mealsAday eine ArrayList welche alle konsumierten Nahrungsmittel eines Tages enthält. 
+	 */
 	public void insertCurrentValues(ArrayList<Meal> mealsAday) {
 		
 		double kcalSum = 0;
@@ -155,15 +206,15 @@ private MealListAdapter adapter;
 			carbsSum += (mealsAday.get(i).getAmount() * mealsAday.get(i).getFood().getCarbs())/100;
 		}
 		}
-		currentKcal.setText(String.valueOf(kcalSum));
-		currentProtein.setText(String.valueOf(proteinSum));
-		currentFat.setText(String.valueOf(fatSum));
-		currentCarbs.setText(String.valueOf(carbsSum));
+		currentKcal.setText(String.valueOf(Math.round(kcalSum)));
+		currentProtein.setText(String.valueOf(Math.round(proteinSum)));
+		currentFat.setText(String.valueOf(Math.round(fatSum)));
+		currentCarbs.setText(String.valueOf(Math.round(carbsSum)));
 		
-		double remainingKcal = dailyAim.getCalories() - kcalSum;
-		double remainingProtein = dailyAim.getProtein() - proteinSum;
-		double remainingFat = dailyAim.getFat() - fatSum;
-		double remainingCarbs = dailyAim.getCarbs() - carbsSum;
+		double remainingKcal = Math.round(dailyAim.getCalories() - kcalSum);
+		double remainingProtein = Math.round(dailyAim.getProtein() - proteinSum);
+		double remainingFat = Math.round(dailyAim.getFat() - fatSum);
+		double remainingCarbs = Math.round(dailyAim.getCarbs() - carbsSum);
 		
 		// Set the text color to red if the value is < 0; set 
 		
@@ -173,13 +224,15 @@ private MealListAdapter adapter;
 		if(remainingCarbs < 0) this.remainingCarbs.setTextColor(getResources().getColor(R.color.red)); else this.remainingCarbs.setTextColor(getResources().getColor(R.color.green));
 		
 		
-		this.remainingKcal.setText(String.valueOf(remainingKcal));
-		this.remainingProtein.setText(String.valueOf(remainingProtein));
-		this.remainingFat.setText(String.valueOf(remainingFat));
-		this.remainingCarbs.setText(String.valueOf(remainingCarbs));
+		this.remainingKcal.setText(String.valueOf(Math.round(remainingKcal)));
+		this.remainingProtein.setText(String.valueOf(Math.round(remainingProtein)));
+		this.remainingFat.setText(String.valueOf(Math.round(remainingFat)));
+		this.remainingCarbs.setText(String.valueOf(Math.round(remainingCarbs)));
 		
 	}
-	
+	/** 
+	 * Methode welche die Liste mit den konsumierten Nahrungsmittel eines Tages befüllt. 
+	 */
 	public void insertListValues() {
 		
 		
@@ -225,5 +278,16 @@ private MealListAdapter adapter;
 	}
 	public void setCurrentDay(Date currentDay) {
 		this.currentDay = currentDay;
+	}
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		Meal mealItem = (Meal) arg0.getItemAtPosition(arg2);
+		
+		DialogFragment dialogFragment = FoodUpdateDialogFragment.newInstance(getActivity(), mealItem);
+		dialogFragment.show(this.getFragmentManager(), "Open Exercise Settings on Long Click");
+		
+		
+		
+		
 	}
 }

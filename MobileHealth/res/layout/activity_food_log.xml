@@ -12,10 +12,11 @@
             android:background="@drawable/actionbar_green"/>
 	
          <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/overview_dateTimePicker"
-            android:layout_gravity="center_horizontal" >
+             android:layout_width="fill_parent"
+             android:layout_height="match_parent"
+             android:layout_below="@+id/overview_dateTimePicker"
+             android:layout_gravity="center_horizontal"
+             android:stretchColumns="0" >
 
             <TableRow
                 android:id="@+id/tableRow1"
@@ -28,6 +29,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:padding="7dp"
+                    android:background="@drawable/cell_shape"
                      />
                 
                 <TextView
@@ -171,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/cell_shape"
                     android:padding="7dp"
-                    android:text="Remaining" />
+                    android:text="Verbleibend" />
                 
                 <TextView
                     android:id="@+id/remainingProtein"

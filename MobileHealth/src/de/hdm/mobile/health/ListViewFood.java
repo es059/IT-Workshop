@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+/**
+ * Klasse welche Elemente der Listview "FoodList" des Fragments FoodSearchFragments repräsentieren.
+ * @author remi
+ *
+ */
 public class ListViewFood extends RelativeLayout
 {
 	 private TextView foodView;

@@ -17,7 +17,11 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
+/**
+ * Fragment welche eine Suchleiste realisiert. Sie dient dazu nach einem Nahrungsmittel im FoodSearchFragment zu suchen. 
+ * @author remi
+ *
+ */
 public class ActionBarSearchBarFragment  extends Fragment{
 	private ImageButton searchButton;
 	private EditText searchBar;
@@ -31,7 +35,9 @@ public class ActionBarSearchBarFragment  extends Fragment{
 		foodMapper = new FoodMapper(getActivity());
 		foodSearchFragment = (FoodSearchFragment) getActivity().getFragmentManager().findFragmentByTag("FoodSearchFragment");
 		searchBar = (EditText) view.findViewById(R.id.foodSearch_subject);
-		
+		/**
+		 * Bei einer Eingabe im Textfeld wird nach Nahrungsmittel mit der eingegebenen Zeichenkette gesucht und der Liste hinzugefügt. 
+		 */
 		searchBar.addTextChangedListener(new TextWatcher() 
 		  {
 	          

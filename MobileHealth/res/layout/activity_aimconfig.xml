@@ -3,14 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
+    <View
+	  	android:id="@+id/divider_general"
+		style="@style/DividerLogin"/>
+		
+	<TextView
+	   	android:id="@+id/textView_general"
+	   	android:layout_above="@+id/divider_general"
+	   	android:layout_alignBottom="@+id/divider_general"
+	   	style="@style/TextViewLogin"
+	   	android:text="Makronährstoffe" />
 
+	<TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/et_calories_target"
+        android:layout_alignBottom="@+id/et_calories_target"
+        android:layout_below="@id/divider_general"
+        android:layout_alignLeft="@id/divider_general"
+        android:text="Kalorien:" />
+	
     <EditText
         android:id="@+id/et_calories_target"
-        android:layout_width="160dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="40dp"
+        android:layout_below="@id/divider_general"
         android:ems="5"
         android:hint="kcal"
         android:inputType="number" >
@@ -22,30 +42,38 @@
         android:id="@+id/tableLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/et_calories_target" >
+        android:layout_marginTop="20dp"
+        android:stretchColumns="*"
+        android:layout_below="@id/et_calories_target"
+         >
 
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="#D8D8D8" >
 
             <TextView
                 android:id="@+id/tv_carbs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Carbs" />
+                android:text="Carbs"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_protein"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Protein" />
+                android:text="Protein"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_fat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fat" />
+                android:text="Fat"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
@@ -109,15 +137,7 @@
         </TableRow>
     </TableLayout>
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/et_calories_target"
-        android:layout_alignBottom="@+id/et_calories_target"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="31dp"
-        android:text="Kalorien" />
+
 
     <TextView
         android:id="@+id/tv_Hinweiss"
@@ -126,15 +146,25 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tableLayout1"
         android:layout_marginTop="50dp"
-        android:text="asdas" />
+        android:hint="Die Makronährstoffe müssen gleich 100% sein" />
 
-    <Button
-        android:id="@+id/button1"
+    <TextView
+        android:id="@+id/tv_Gesamt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tv_Hinweiss"
-        android:layout_marginTop="26dp"
-        android:text="Button" />
+        android:layout_centerVertical="true"
+        android:layout_below="@id/tableLayout1"
+        android:layout_marginTop="5dp"
+        android:text="Gesamt" />
+
+    <TextView
+        android:id="@+id/tv_per_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tableLayout1"
+        android:layout_marginTop="5dp"
+        android:layout_alignRight="@+id/tv_Hinweiss"
+        android:text="" />
 
 </RelativeLayout>

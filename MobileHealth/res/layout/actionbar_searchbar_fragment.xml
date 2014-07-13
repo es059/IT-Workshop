@@ -12,9 +12,9 @@
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="bottom"
 	        android:layout_weight="1"
-	        android:hint="Nahrungsmittel Suchen"
 	        android:drawableRight="@android:drawable/ic_menu_search"
-	        android:ems="10" >
+	        android:ems="10"
+	        android:textColor="#FFFFFF" >
 			<requestFocus />
 	    </EditText>
 </LinearLayout>

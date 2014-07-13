@@ -13,6 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
  
+/**
+ * Adapter für die Elemete der Menüliste
+ * @author remi
+ *
+ */
 public class CustomDrawerAdapter extends ArrayAdapter<DrawerItem> {
  
       Context context;

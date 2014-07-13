@@ -3,6 +3,7 @@ package de.hdm.mobile.health;
 import de.hdm.mobile.health.adapter.CustomDrawerAdapter;
 import de.hdm.mobile.health.db.UserMapper;
 import de.hdm.mobile.health.fragment.AddFood;
+import de.hdm.mobile.health.fragment.BottomLogIn;
 import de.hdm.mobile.health.fragment.Disclaimer;
 import android.app.Activity;
 import android.app.FragmentTransaction;
@@ -17,7 +18,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-
+/**
+ * Main-Activity welche den Rahmen aller Fragments darstellt.
+ *  Diese Klasse implementiert das Menü sodass jedes Fragment, das auf diesem Acitivty basiert auf das Menü zugreifen kann.
+ * @author remi
+ *
+ */
 public class HelperActivity extends Activity  {
 	
 	private DrawerLayout mDrawerLayout;
@@ -27,6 +33,7 @@ public class HelperActivity extends Activity  {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private CustomDrawerAdapter adapter;
+    private FragmentTransaction transaction;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -80,6 +87,8 @@ public class HelperActivity extends Activity  {
 	        transaction.replace(R.id.fragment_container, new Disclaimer(), "Disclaimer");
 	        transaction.addToBackStack("Disclaimer");
 	        transaction.commit();
+	        
+	      
 		}else{
 			/**
 			 * Remove the LogIn Navigation Buttons and call the first Fragment
@@ -87,9 +96,9 @@ public class HelperActivity extends Activity  {
 			 * @author Eric Schmidt
 			 */
 		    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		    transaction.hide(getFragmentManager().findFragmentById(R.id.LogIn_Bottom));
+		  //  transaction.hide(getFragmentManager().findFragmentById(R.id.LogIn_Bottom));
 	        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-	        transaction.replace(R.id.fragment_container, new AddFood(), "AddFood");
+	        transaction.replace(R.id.fragment_container, new FoodLogFragment(), "FoodLogFragment");
 	        transaction.addToBackStack(null);
 	        transaction.commit();
 		}
@@ -114,13 +123,28 @@ public class HelperActivity extends Activity  {
 	public void SelectItem(int possition) { 
 		switch(possition) {
 			case 0:
-	
+					mDrawerLayout.closeDrawers();
+					transaction = getFragmentManager().beginTransaction();
+			        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			        transaction.replace(R.id.fragment_container, new FoodLogFragment(), "FoodLogFragment");
+			        transaction.addToBackStack(null);
+			        transaction.commit();
 				break;
 			case 1: 
-			
+					mDrawerLayout.closeDrawers();
+				 	transaction = getFragmentManager().beginTransaction();
+			        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			        transaction.replace(R.id.fragment_container, new AimConfigFragment(), "AddFood");
+			        transaction.addToBackStack(null);
+			        transaction.commit();
 				break;
 			case 2: 
-			
+					mDrawerLayout.closeDrawers();
+					transaction = getFragmentManager().beginTransaction();
+			        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			        transaction.replace(R.id.fragment_container, new AddFood(), "AddFood");
+			        transaction.addToBackStack(null);
+			        transaction.commit();
 				break;
 			case 3: 
 			

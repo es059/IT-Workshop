@@ -1,5 +1,10 @@
 package de.hdm.mobile.health;
 
+/**
+ * Klasse, welche Obejete des Menüs repräsentieren.
+ * @author remi
+ *
+ */
 public class DrawerItem {
 	 
     String ItemName;

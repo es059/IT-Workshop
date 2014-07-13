@@ -2,18 +2,20 @@ package de.hdm.mobile.health;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Klasse welche bei der Initialiserung eine Liste mit Menüelementen erstellt. 
+ * @author remi
+ *
+ */
 public class MenueListe {
 
 	private List<DrawerItem> dataList;
 	public MenueListe() {
 		 dataList = new ArrayList<DrawerItem>();
-		 dataList.add(new DrawerItem("Home", R.drawable.ic_action_email));
-		 dataList.add(new DrawerItem("Trainingspläne", R.drawable.ic_action_good));
-		 dataList.add(new DrawerItem("Trainingtage", R.drawable.ic_action_gamepad));
-		 dataList.add(new DrawerItem("Übungen", R.drawable.ic_action_labels));
-		 dataList.add(new DrawerItem("Statisitik", R.drawable.ic_action_search));
-		 dataList.add(new DrawerItem("About", R.drawable.ic_action_cloud));
+		 dataList.add(new DrawerItem("Logbuch", R.drawable.ic_action_email));
+		 dataList.add(new DrawerItem("Ziele", R.drawable.ic_action_good));
+		 dataList.add(new DrawerItem("Neue Lebensmittel", R.drawable.ic_action_gamepad));
+		
 	}
 	public List<DrawerItem> getDataList() {
 		return dataList;

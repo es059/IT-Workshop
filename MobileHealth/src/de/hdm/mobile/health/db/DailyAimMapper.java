@@ -8,6 +8,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Mapper Klasse welche tägliche Ziele aus der Datenbank auslesen und einpflegen kann. 
+ * @author remi
+ *
+ */
 public class DailyAimMapper {
 	private DataBaseHelper myDBHelper;
 	private String sql;
@@ -51,6 +56,10 @@ public class DailyAimMapper {
 		return dailyAim;
 	}
 	
+	/**
+	 * Methode zum setzen eines neuen täglichen Ziels
+	 * 
+	 */
 	public void setDailyAim(DailyAim da) {
 		SQLiteDatabase db = myDBHelper.getWritableDatabase();
 		sql = "INSERT OR REPLACE INTO DailyAim (Calories, Proteine, Fat, Carbs) VALUES ("+ da.getCalories()+ "," + da.getProtein() +","+ da.getFat()+ ", "+ da.getCarbs() +")";
@@ -58,5 +67,20 @@ public class DailyAimMapper {
 		db.close();
 		
 		
+	}
+	/**
+	 * Methode welche die Anzahl von täglichen Zielen zählt. 
+	 * @return
+	 */
+	public int countAims() {
+		SQLiteDatabase db = myDBHelper.getWritableDatabase();
+		sql = "SELECT COUNT (*) FROM DailyAim";
+		int count = 0;
+		Cursor cursor = db.rawQuery(sql, null);
+		if (cursor.moveToFirst()) {
+			count = cursor.getInt(0);
+		}
+		db.close();
+		return count;
 	}
 }

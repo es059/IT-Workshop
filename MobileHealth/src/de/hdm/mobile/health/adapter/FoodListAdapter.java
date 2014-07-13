@@ -8,7 +8,11 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
+/**
+ * Adapter für die Listview "FoodList" des Fragments FoodSearchFragments
+ * @author remi
+ *
+ */
 public class FoodListAdapter extends ArrayAdapter<Food> {
 	public FoodListAdapter(Context context, int textViewResourceId, List<Food> objects) {
 		super(context, textViewResourceId, objects);

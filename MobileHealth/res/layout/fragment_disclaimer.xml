@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,11 +9,18 @@
     <TextView
         android:id="@+id/Disclaimer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="350dp"
         android:layout_weight="1"
         android:maxLines="35"
         android:scrollbars="vertical"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <FrameLayout
+        android:id="@+id/LogIn_Container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_below="@+id/Disclaimer" />
 
-</LinearLayout>
+</RelativeLayout>
 

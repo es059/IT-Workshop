@@ -28,6 +28,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Fragment mit Hilfe man ein neues Lebensmittel hinzufügen kann.
+ * @author remi
+ *
+ */
 public class AddFood extends Fragment{
 
 	public String barcodeString = "";
@@ -142,6 +147,13 @@ public class AddFood extends Fragment{
 		private ProgressDialog mDialog;
 
 		public BackGroundTask (AddFood activity){
+			fat = (EditText)getActivity().findViewById(R.id.scan_fat);
+			protein = (EditText)getActivity().findViewById(R.id.scan_protein);
+			carb = (EditText)getActivity().findViewById(R.id.scan_carb);
+			cal = (EditText)getActivity().findViewById(R.id.scan_kalc);
+			name = (EditText)getActivity().findViewById(R.id.scan_name);
+			barcode = (EditText)getActivity().findViewById(R.id.scan_barcode);
+			
 		    mDialog = new ProgressDialog(AddFood.this.getActivity());
 		    mDialog.setProgressStyle(ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT);
 		    mDialog.setMessage("Lade Information");
@@ -199,6 +211,8 @@ public class AddFood extends Fragment{
 				e.printStackTrace();
 			}
 			return null;
+
+
 	    }
 
 	    @Override

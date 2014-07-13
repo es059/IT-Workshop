@@ -4,14 +4,26 @@ import java.util.Date;
 
 import de.hdm.mobile.health.ListItem;
 
+/**
+ * Ein Objekt dieser Klasse repräsentiert eine Mahlzeit im Tagebuch.
+ * @author remi
+ *
+ */
 public class Meal implements ListItem {
+	
+	private int iD;
 	
 	private Food food;
 	private double amount;
 	private Mealtype mealtype;
 	private Date date;
 	
-	
+	public int getiD() {
+		return iD;
+	}
+	public void setiD(int iD) {
+		this.iD = iD;
+	}
 	public Food getFood() {
 		return food;
 	}

@@ -26,6 +26,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+/**
+ * Diese Klasse repräsentiert ein Dialog-Fragment welches aufgerufen wird wenn ein User eine Nahrung dem Tagebuch hinzufügen möchte. 
+ * Der User kann mit Hilfe dieses Fragments ein Nahrungsmittel mit einer bestimmten Grammzahl seinem Tagebuch hinzufügen.
+ * Dabei werden die Makronährstoffe anhand der angegebenen Grammzahl berechnet 
+ * @author remi
+ *
+ */
 @SuppressLint("ValidFragment")
 public class FoodClickDialogFragment extends DialogFragment implements OnItemSelectedListener {
 	
@@ -45,7 +52,6 @@ private FoodLogFragment foodLogFragment;
 
 	public static FoodClickDialogFragment newInstance(Context a, Food f, int mt_Id) {
 		FoodClickDialogFragment exerciseAddDialogFragment = new FoodClickDialogFragment(a, f, mt_Id);
-		
 		mm = new MealMapper(a);
 		return exerciseAddDialogFragment;
 
@@ -83,6 +89,9 @@ private FoodLogFragment foodLogFragment;
 		tvCarbsValue = (TextView) view.findViewById(R.id.tvCarbsValue);
 		tvFatValue = (TextView) view.findViewById(R.id.tvFatValue);
 		
+		/**
+		 * Bei der Eingabe in das Textfeld der Grammanzahl wird die Anzahl der Makronährstoffe berechnet und angezeigt. 
+		 */
 		etAmount.addTextChangedListener(new TextWatcher() 
 		  {
 	          
@@ -102,10 +111,10 @@ private FoodLogFragment foodLogFragment;
 	        	 Editable e =  etAmount.getText(); 
 	        	
 	        	 int amount = Integer.parseInt(e.toString());
-	             tvKcalValue.setText(String.valueOf((food.getCalories() * amount) / 100));
-	             tvProteinValue.setText(String.valueOf((food.getProtein() * amount) / 100));
-	             tvCarbsValue.setText(String.valueOf((food.getCarbs() * amount) / 100));
-	             tvFatValue.setText(String.valueOf((food.getFat() * amount) / 100));
+	             tvKcalValue.setText(String.valueOf(Math.round((food.getCalories() * amount) / 100)));
+	             tvProteinValue.setText(String.valueOf(Math.round((food.getProtein() * amount) / 100))+ " g");
+	             tvCarbsValue.setText(String.valueOf(Math.round((food.getCarbs() * amount) / 100))+ " g");
+	             tvFatValue.setText(String.valueOf(Math.round((food.getFat() * amount) / 100)) +" g");
 	        	 }
 	        	 else {
 	        		 tvKcalValue.setText("0");
@@ -119,7 +128,9 @@ private FoodLogFragment foodLogFragment;
 		foodLogFragment = (FoodLogFragment) getActivity().getFragmentManager().findFragmentByTag("FoodLogFragment");
 
 		alert.setView(view);
-
+		/**
+		 * Beim Klick auf den Save-Button wird die Mahlzeit dem Ernährungstagebuch hinzugefügt und der User wird anschließend wieder auf sein Tagebuch geleitet. 
+		 */
 		alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 			Meal m = new Meal();
@@ -132,7 +143,7 @@ private FoodLogFragment foodLogFragment;
 			
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 	        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-	        transaction.replace(R.id.fragment_container, new FoodLogFragment() , "Disclaimer");
+	        transaction.replace(R.id.fragment_container, new FoodLogFragment() , "FoodLogFragment");
 	        transaction.addToBackStack(null);
 	        transaction.commit();
 		  }
@@ -147,7 +158,9 @@ private FoodLogFragment foodLogFragment;
 		return alert.show();
 	}
 
-
+/**
+ * Legt fest welcher Mealtyp im Spinner ausgewählt wurde. 
+ */
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
@@ -157,8 +170,6 @@ private FoodLogFragment foodLogFragment;
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 }
 

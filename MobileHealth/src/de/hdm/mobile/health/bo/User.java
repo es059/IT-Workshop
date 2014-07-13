@@ -1,5 +1,11 @@
 package de.hdm.mobile.health.bo;
 
+
+/**
+ * Ein Objekt dieser Klasse repräsentiert einen Nutzer. 
+ * @author remi
+ *
+ */
 public class User {
 	private String mLastName;
 	private int mId;

@@ -24,6 +24,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+/**
+ * Klasse welche die Navigationsleiste im Tagebuch realisiert. Sie dient dazu zwischen Tagen im Tagebuch zu wechseln.
+ * @author remi
+ *
+ */
 public class ActionBarDatePickerFragment extends Fragment implements OnClickListener{
 	TextView date;
 	ImageButton next;
@@ -88,12 +93,15 @@ public class ActionBarDatePickerFragment extends Fragment implements OnClickList
 		}
 	}
 	
+	/**
+	 * Methode welche das Tagebuch Fragment aktualiesiert, abhängig davon welcher Tag in der Navigation ausgewählt hat. 
+	 */
 	public void updateFoodLogFragment() {
 		ArrayList<Meal> mealsAday = new ArrayList<Meal>();
-		Date date = calendar.getTime();
-		mealsAday = mealMapper.getMealsAday(date);
+		Date date1 = calendar.getTime();
+		mealsAday = mealMapper.getMealsAday(date1);
 		foodLogFragment.insertCurrentValues(mealsAday);
-		foodLogFragment.setCurrentDay(date);
+		foodLogFragment.setCurrentDay(date1);
 		foodLogFragment.insertListValues();
 	}
 }

@@ -40,13 +40,13 @@
         android:text="Name:" />
 	 
     <EditText
-        android:id="@+id/scan_carb"
+        android:id="@+id/scan_kalc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/scan_name"
         android:ems="10"
-        android:hint="Kohlenhydrate" />
+        android:hint="Kalorien" />
     
     <TextView
         android:layout_width="wrap_content"
@@ -57,13 +57,13 @@
         android:text="Kohlenhydrate:" />
 
     <EditText
-        android:id="@+id/scan_kalc"
+        android:id="@+id/scan_carb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/scan_carb"
+        android:layout_below="@+id/scan_kalc"
         android:layout_alignParentRight="true"
         android:ems="10"
-        android:hint="Kalorien" />
+        android:hint="Kohlenhydrate" />
     
      <TextView
         android:layout_width="wrap_content"
@@ -77,7 +77,7 @@
         android:id="@+id/scan_fat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/scan_kalc"
+        android:layout_below="@+id/scan_carb"
         android:layout_alignParentRight="true"
         android:ems="10"
         android:hint="Fett" />

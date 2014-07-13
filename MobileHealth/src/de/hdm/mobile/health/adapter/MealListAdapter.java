@@ -27,6 +27,11 @@ import de.hdm.mobile.health.bo.Food;
 import de.hdm.mobile.health.bo.Meal;
 import de.hdm.mobile.health.bo.Mealtype;
 
+/**
+ * Adapter für die Elemte der ListView "FoodList" des Fragments FoodLogFragment
+ * @author remi
+ *
+ */
 public class MealListAdapter extends ArrayAdapter<ListItem>   {
 	
 	private Context context;

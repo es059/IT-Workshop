@@ -23,7 +23,6 @@ public class CustomListViewHeader extends RelativeLayout {
 		this.activity = activity;
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View listViewExercise = inflater.inflate(R.layout.listview_header, null);
-		//sectionView = (TextView) listViewExercise.findViewById(R.id.listview_header);
 		
 		button.setOnClickListener(new OnClickListener(){
 
@@ -35,7 +34,6 @@ public class CustomListViewHeader extends RelativeLayout {
 				FoodSearchFragment frag = new FoodSearchFragment();
 				frag.setArguments(bl);
 				FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
-			    transaction.hide(activity.getFragmentManager().findFragmentById(R.id.LogIn_Bottom));
 		        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		        transaction.replace(R.id.fragment_container, frag, "ada");
 		        transaction.addToBackStack(null);

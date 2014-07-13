@@ -9,6 +9,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Mapper-Klasse welche Mahlzeitarten aus der Datenbank auslesen kann. 
+ * @author remi
+ *
+ */
 public class MealTypeMapper {
 	private DataBaseHelper myDBHelper;
 	private String sql;
@@ -28,14 +33,17 @@ public class MealTypeMapper {
 	 	}
 	}
 	
-	
+	/**
+	 * Methode zum Auslesen eines Mahlzeitart anhand einer eindeutigen ID
+	 */
 	public Mealtype getMealTypeById(int Id) {
 		Mealtype mealtype = new Mealtype();
 	    SQLiteDatabase db = this.myDBHelper.getReadableDatabase();
 	    sql = "SELECT * FROM Mealtype WHERE Mealtype_Id = " + Id;
 	    Cursor cursor = db.rawQuery(sql, null);
 	    if (cursor.moveToFirst()){
-		   mealtype.setName(cursor.getString(1));
+	    	mealtype.setId(Id);
+	    	mealtype.setName(cursor.getString(1));
 		   
 	    }
 	    db.close();

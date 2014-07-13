@@ -3,6 +3,7 @@ package de.hdm.mobile.health.fragment;
 import de.hdm.mobile.health.R;
 import de.hdm.mobile.health.bo.User;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,6 +42,12 @@ public class LogInAdvanced extends Fragment {
 		 */
 		mMale = (RadioButton) view.findViewById(R.id.Gender_male);
 		mFemale = (RadioButton) view.findViewById(R.id.Gender_female);
+		
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.replace(R.id.LogIn_Container, new BottomLogIn(), "BottomLogIn");
+        transaction.addToBackStack(null);
+        transaction.commit();
 	    return view;
 	}
 	
@@ -89,16 +96,16 @@ public class LogInAdvanced extends Fragment {
 		 */
 		switch(mActivitylevel.getSelectedItem().toString()){
 			case "Gering":
-				n.setActivitylevel(1);
+				n.setActivitylevel(1.2);
 				break;
 			case "Normal":
-				n.setActivitylevel(2);
+				n.setActivitylevel(1.3);
 				break;
 			case "Hoch":
-				n.setActivitylevel(3);
+				n.setActivitylevel(1.4);
 				break;
 			case "Sehr Hoch":
-				n.setActivitylevel(4);
+				n.setActivitylevel(1.75);
 				break;
 		}
 		

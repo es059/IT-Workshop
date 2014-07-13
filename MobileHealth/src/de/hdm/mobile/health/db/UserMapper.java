@@ -8,6 +8,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import de.hdm.mobile.health.bo.User;
 
+
+/**
+ * Mapper-Klasse welche Nutzer auslesen und hinzufügen kann 
+ * @author remi
+ *
+ */
 public class UserMapper {
 	private DataBaseHelper myDBHelper;
 	private String sql;
@@ -26,7 +32,7 @@ public class UserMapper {
 	 	}
 	}
 	/**
-	 * Add a new Food to the Database
+	 * Add a new User to the Database
 	 * 
 	 * @param f Food to be added
 	 * @author Eric Schmidt
@@ -70,5 +76,27 @@ public class UserMapper {
 		}else{
 			return false;
 		}	
+	}
+	/**
+	 * Methode zum Auslesen des Nutzers. 
+	 * @return
+	 */
+	public User getUser() {
+		SQLiteDatabase db = myDBHelper.getWritableDatabase();
+		sql = "SELECT * FROM User";
+		User user = new User();
+		Cursor cursor = db.rawQuery(sql, null);
+		if (cursor.moveToFirst()){
+			user.setId(cursor.getInt(0));
+			user.setLastName(cursor.getString(1));
+			user.setSurename(cursor.getString(2));
+			user.setHeight(cursor.getDouble(3));
+			user.setWeight(cursor.getDouble(4));
+			user.setGender(cursor.getDouble(5));
+			user.setAge(cursor.getDouble(6));
+			user.setActivitylevel(cursor.getDouble(7));
+		}
+			
+		return user;
 	}
 }

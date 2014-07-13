@@ -1,5 +1,10 @@
 package de.hdm.mobile.health.bo;
 
+/**
+ * Objekte dieser Klasse repräsentieren ein tägliches Nährwerteziel. 
+ * @author remi
+ *
+ */
 public class DailyAim {
 
 	private double calories;
